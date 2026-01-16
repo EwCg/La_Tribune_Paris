@@ -9,7 +9,7 @@ const Events: React.FC = () => {
       {/* Page Header */}
       <section className="bg-navy py-24 text-white">
         <div className="max-w-7-xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h1 className="serif text-5xl font-bold mb-6">Nos Formats d'Éveil</h1>
+          <h1 className="serif text-5xl font-bold mb-6">Nos Formats d'Événements</h1>
           <p className="text-xl text-gray-400 max-w-2xl mx-auto font-light">
             De la joute verbale enflammée à la plaidoirie solennelle, 
             découvrez comment nous façonnons les orateurs de demain.

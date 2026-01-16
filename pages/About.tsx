@@ -1,9 +1,50 @@
 
 import React from 'react';
-import { TEAM_MEMBERS, PARTNERS } from '../constants';
-import { Linkedin, Mail, ExternalLink } from 'lucide-react';
+import { PARTNERS } from '../constants';
+import { Linkedin } from 'lucide-react';
 
 const About: React.FC = () => {
+  // --- CONFIGURATION DU BUREAU ---
+  // Modifiez simplement les informations ci-dessous pour changer les membres.
+  const bureauMembers = [
+    {
+      name: 'Alexandre Dupont',
+      role: 'Président',
+      photo: 'https://picsum.photos/seed/alex/400/400',
+      linkedin: 'https://linkedin.com'
+    },
+    {
+      name: 'Sophie Martin',
+      role: 'Vice-Présidente',
+      photo: 'https://picsum.photos/seed/sophie/400/400',
+      linkedin: 'https://linkedin.com'
+    },
+    {
+      name: 'Thomas Bernard',
+      role: 'Secrétaire Général',
+      photo: 'https://picsum.photos/seed/thomas/400/400',
+      linkedin: 'https://linkedin.com'
+    },
+    {
+      name: 'Léa Leroy',
+      role: 'Trésorière',
+      photo: 'https://picsum.photos/seed/lea/400/400',
+      linkedin: 'https://linkedin.com'
+    },
+    {
+      name: 'Antoine Petit',
+      role: 'Responsable Événementiel',
+      photo: 'https://picsum.photos/seed/antoine/400/400',
+      linkedin: 'https://linkedin.com'
+    },
+    {
+      name: 'Camille Moreau',
+      role: 'Responsable Communication',
+      photo: 'https://picsum.photos/seed/camille/400/400',
+      linkedin: 'https://linkedin.com'
+    }
+  ];
+
   return (
     <main className="py-20 animate-in fade-in slide-in-from-bottom-4 duration-700">
       {/* History Section */}
@@ -77,14 +118,16 @@ const About: React.FC = () => {
           <p className="text-gray-500">Les visages derrière l'excellence de La Tribune</p>
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-12">
-          {TEAM_MEMBERS.map((member) => (
-            <div key={member.id} className="group flex flex-col items-center">
+          {bureauMembers.map((member, index) => (
+            <div key={index} className="group flex flex-col items-center">
               <div className="relative mb-6">
                 <div className="w-48 h-48 rounded-full overflow-hidden border-4 border-white shadow-xl group-hover:border-gold transition-colors duration-300">
                   <img src={member.photo} className="w-full h-full object-cover" alt={member.name} />
                 </div>
                 <a 
                   href={member.linkedin} 
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="absolute bottom-2 right-2 bg-gold text-navy p-3 rounded-full shadow-lg transform translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300"
                 >
                   <Linkedin size={20} />
@@ -97,7 +140,7 @@ const About: React.FC = () => {
         </div>
       </section>
 
-      {/* Partners - Modernized and Enlarged */}
+      {/* Partners */}
       <section className="bg-off-white py-24">
         <div className="max-w-7-xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h4 className="text-navy font-bold uppercase tracking-widest text-sm mb-16">Nos Partenaires & Fédérations</h4>
