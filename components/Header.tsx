@@ -59,7 +59,7 @@ const Header: React.FC = () => {
           {/* ACTIONS & LOGO DROITE : Identité La Tribune */}
           <div className="flex-1 flex justify-end items-center space-x-6">
             <a
-              href="https://forms.gle/your-form-id"
+              href="https://docs.google.com/forms/d/e/1FAIpQLSefY3WbOaXMbCCEZsnk5ay65yOEQ0B4vRKI-WYnY3O9GNAHRg/viewform?fbclid=PAb21jcAPXZDFleHRuA2FlbQIxMQBzcnRjBmFwcF9pZA81NjcwNjczNDMzNTI0MjcAAadiFeMTEBMNvlTkl3ngTMx7jgfFoutHsNqNkJdgDHDBaWQDIIeAj6VoDj2LOw_aem_tewU2Z5qHqwRPwIXP0c2KA"
               target="_blank"
               rel="noopener noreferrer"
               className="hidden lg:block bg-gold text-navy px-6 py-2 rounded-full font-bold text-sm transform transition-all hover:scale-105 active:scale-95 shadow-md hover:shadow-gold/20"
