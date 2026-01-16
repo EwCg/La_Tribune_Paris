@@ -39,7 +39,7 @@ const About: React.FC = () => {
           </div>
           <div className="relative">
             <img 
-              src="https://images.unsplash.com/photo-1524178232363-1fb28f74b671?auto=format&fit=crop&q=80&w=1000" 
+              src="https://raw.githubusercontent.com/EwCg/La_Tribune_Resources/main/Bureau.jpeg" 
               className="rounded-3xl shadow-2xl relative z-10"
               alt="Bureau La Tribune"
             />

@@ -4,45 +4,45 @@ import { TeamMember, Article } from './types';
 export const TEAM_MEMBERS: TeamMember[] = [
   {
     id: '1',
-    name: 'Alexandre Dupont',
+    name: 'Fabio Minetti',
     role: 'Président',
-    photo: 'https://picsum.photos/seed/alex/400/400',
-    linkedin: 'https://linkedin.com'
+    photo: 'https://raw.githubusercontent.com/EwCg/La_Tribune_Resources/main/Fabio_Minetti.jpg',
+    linkedin: 'https://www.linkedin.com/in/fabio-minetti/'
   },
   {
     id: '2',
-    name: 'Sophie Martin',
+    name: 'Maxence Carette',
     role: 'Vice-Présidente',
-    photo: 'https://picsum.photos/seed/sophie/400/400',
-    linkedin: 'https://linkedin.com'
+    photo: 'https://raw.githubusercontent.com/EwCg/La_Tribune_Resources/main/Maxence_Carrette.jpg',
+    linkedin: 'https://www.linkedin.com/in/maxence-carrette-759264250/'
   },
   {
     id: '3',
-    name: 'Thomas Bernard',
+    name: 'Candice Lefevre',
     role: 'Secrétaire Général',
-    photo: 'https://picsum.photos/seed/thomas/400/400',
-    linkedin: 'https://linkedin.com'
+    photo: 'https://raw.githubusercontent.com/EwCg/La_Tribune_Resources/main/Candice_Lefevre.jpg',
+    linkedin: 'https://www.linkedin.com/in/candicelefevre92/'
   },
   {
     id: '4',
-    name: 'Léa Leroy',
-    role: 'Trésorière',
-    photo: 'https://picsum.photos/seed/lea/400/400',
-    linkedin: 'https://linkedin.com'
+    name: 'Thibaud Hainque',
+    role: 'Trésorier',
+    photo: 'https://raw.githubusercontent.com/EwCg/La_Tribune_Resources/main/Thibaud_Hainque.jpg',
+    linkedin: 'https://www.linkedin.com/in/thibaud-hainque-b4327b290/'
   },
   {
     id: '5',
-    name: 'Antoine Petit',
+    name: 'Alexandre Lejard',
     role: 'Responsable Événementiel',
-    photo: 'https://picsum.photos/seed/antoine/400/400',
-    linkedin: 'https://linkedin.com'
+    photo: 'https://raw.githubusercontent.com/EwCg/La_Tribune_Resources/main/Alexandre_Lejard.jpg',
+    linkedin: 'https://www.linkedin.com/in/alexandre-lejard-260225291/'
   },
   {
     id: '6',
-    name: 'Camille Moreau',
+    name: 'Bianka Chesnet',
     role: 'Responsable Communication',
-    photo: 'https://picsum.photos/seed/camille/400/400',
-    linkedin: 'https://linkedin.com'
+    photo: 'https://raw.githubusercontent.com/EwCg/La_Tribune_Resources/main/Bianka_Chesnet.jpg',
+    linkedin: 'https://www.linkedin.com/in/bianka-chesnet/'
   }
 ];
 
@@ -58,14 +58,14 @@ export const PARTNERS = [
 ];
 
 export const GALLERY_IMAGES = [
-  'https://picsum.photos/seed/event1/800/600',
-  'https://picsum.photos/seed/event2/800/600',
-  'https://picsum.photos/seed/event3/800/600',
-  'https://picsum.photos/seed/event4/800/600',
-  'https://picsum.photos/seed/event5/800/600',
-  'https://picsum.photos/seed/event6/800/600',
-  'https://picsum.photos/seed/event7/800/600',
-  'https://picsum.photos/seed/event8/800/600'
+  'https://raw.githubusercontent.com/EwCg/La_Tribune_Resources/main/Amélie_Oudeacastera.jpeg',
+  'https://raw.githubusercontent.com/EwCg/La_Tribune_Resources/main/Antoine_discours.jpeg',
+  'https://raw.githubusercontent.com/EwCg/La_Tribune_Resources/main/Arthur_discour.jpeg',
+  'https://raw.githubusercontent.com/EwCg/La_Tribune_Resources/main/Bureau.jpeg',
+  'https://raw.githubusercontent.com/EwCg/La_Tribune_Resources/main/Emrys.jpeg',
+  'https://raw.githubusercontent.com/EwCg/La_Tribune_Resources/main/photo_bar.jpeg',
+  'https://raw.githubusercontent.com/EwCg/La_Tribune_Resources/main/Max_et_Axel.jpeg',
+  'https://raw.githubusercontent.com/EwCg/La_Tribune_Resources/main/MUN.jpeg'
 ];
 
 export const MOCK_ARTICLES: Article[] = [

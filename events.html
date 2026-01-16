@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Événements - La Tribune IESEG</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: { colors: { navy: '#011734', gold: '#FECB01', 'off-white': '#F8F9FA', 'navy-light': '#0a2342' }, fontFamily: { sans: ['Lato', 'sans-serif'], serif: ['Merriweather', 'serif'] } }
+            }
+        }
+    </script>
+</head>
+<body class="flex flex-col min-h-screen bg-off-white">
+    
+    <!-- NAV -->
+    <nav class="sticky top-0 z-50 bg-navy text-white shadow-lg border-b border-white/10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20">
+                <a href="index.html" class="flex-shrink-0"><img src="https://raw.githubusercontent.com/EwCg/La_Tribune_Resources/main/12%20(3).png" alt="Logo" class="h-10"></a>
+                <div class="hidden md:flex space-x-8 items-center">
+                    <a href="index.html" class="hover:text-gold transition-colors font-medium">Accueil</a>
+                    <a href="about.html" class="hover:text-gold transition-colors font-medium">À Propos</a>
+                    <a href="events.html" class="text-gold font-bold">Événements</a>
+                    <a href="articles.html" class="hover:text-gold transition-colors font-medium">Articles</a>
+                    <a href="social.html" class="hover:text-gold transition-colors font-medium">Social</a>
+                    <a href="https://forms.gle/your-form-id" target="_blank" class="bg-gold text-navy px-5 py-2 rounded-full font-bold hover:bg-white transition-all">Rejoignez-nous</a>
+                </div>
+                <button onclick="document.getElementById('mobile-menu').classList.toggle('hidden')" class="md:hidden text-white hover:text-gold"><i data-lucide="menu" class="w-8 h-8"></i></button>
+            </div>
+        </div>
+        <div id="mobile-menu" class="hidden md:hidden bg-navy-light border-t border-white/10 p-4 space-y-2">
+            <a href="index.html" class="block py-2 text-white hover:text-gold">Accueil</a>
+            <a href="about.html" class="block py-2 text-white hover:text-gold">À Propos</a>
+            <a href="events.html" class="block py-2 text-gold font-bold">Événements</a>
+            <a href="articles.html" class="block py-2 text-white hover:text-gold">Articles</a>
+            <a href="social.html" class="block py-2 text-white hover:text-gold">Social</a>
+        </div>
+    </nav>
+
+    <main class="flex-grow">
+        <section class="bg-navy py-20 text-white text-center">
+            <div class="max-w-4xl mx-auto px-4">
+                <h1 class="font-serif text-5xl font-bold mb-6">Nos Formats</h1>
+                <p class="text-xl text-gray-400 font-light">De la joute verbale enflammée aux rencontres inspirantes.</p>
+            </div>
+        </section>
+
+        <section class="py-20 max-w-7xl mx-auto px-4">
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Card 1: Débat -->
+                <div class="bg-white p-10 rounded-3xl shadow-xl border border-gray-100 hover:border-gold transition-colors group flex flex-col">
+                    <div class="bg-gold w-16 h-16 rounded-2xl flex items-center justify-center mb-8 text-navy"><i data-lucide="gavel" class="w-8 h-8"></i></div>
+                    <h2 class="font-serif text-2xl font-bold mb-4 text-navy">Débat Parlementaire</h2>
+                    <p class="text-gray-600 mb-6 text-sm flex-grow">Deux équipes (Gouvernement vs Opposition) s'affrontent sur une motion. Un exercice de structure et de répartie.</p>
+                    <ul class="text-xs text-gray-500 space-y-2 mb-8">
+                        <li class="flex items-center gap-2"><div class="w-1.5 h-1.5 bg-gold rounded-full"></div> 4 orateurs par équipe</li>
+                        <li class="flex items-center gap-2"><div class="w-1.5 h-1.5 bg-gold rounded-full"></div> 7 minutes par discours</li>
+                    </ul>
+                    <a href="article.html?id=debat-parlementaire-sport-haut-niveau" class="text-navy font-bold text-sm border-b-2 border-gold pb-1 hover:text-gold hover:border-transparent transition-colors w-max">Lire un retour d'expérience</a>
+                </div>
+
+                <!-- Card 2: Plaidoirie -->
+                <div class="bg-white p-10 rounded-3xl shadow-xl border border-gray-100 hover:border-gold transition-colors group flex flex-col">
+                    <div class="bg-gold w-16 h-16 rounded-2xl flex items-center justify-center mb-8 text-navy"><i data-lucide="mic-2" class="w-8 h-8"></i></div>
+                    <h2 class="font-serif text-2xl font-bold mb-4 text-navy">Plaidoirie</h2>
+                    <p class="text-gray-600 mb-6 text-sm flex-grow">Seul face au public, l'orateur doit convaincre sur un sujet imposé. C'est l'art de la mise en scène.</p>
+                    <ul class="text-xs text-gray-500 space-y-2 mb-8">
+                        <li class="flex items-center gap-2"><div class="w-1.5 h-1.5 bg-gold rounded-full"></div> Performance individuelle</li>
+                        <li class="flex items-center gap-2"><div class="w-1.5 h-1.5 bg-gold rounded-full"></div> Liberté de ton totale</li>
+                    </ul>
+                    <a href="article.html?id=rhetorique-et-climat" class="text-navy font-bold text-sm border-b-2 border-gold pb-1 hover:text-gold hover:border-transparent transition-colors w-max">Découvrir nos techniques</a>
+                </div>
+
+                <!-- Card 3: Conférences (NOUVEAU) -->
+                <div class="bg-white p-10 rounded-3xl shadow-xl border border-gray-100 hover:border-gold transition-colors group flex flex-col">
+                    <div class="bg-gold w-16 h-16 rounded-2xl flex items-center justify-center mb-8 text-navy"><i data-lucide="users" class="w-8 h-8"></i></div>
+                    <h2 class="font-serif text-2xl font-bold mb-4 text-navy">Conférences</h2>
+                    <p class="text-gray-600 mb-6 text-sm flex-grow">Rencontres privilégiées avec des personnalités du monde politique, économique et artistique.</p>
+                    <ul class="text-xs text-gray-500 space-y-2 mb-8">
+                        <li class="flex items-center gap-2"><div class="w-1.5 h-1.5 bg-gold rounded-full"></div> Invités prestigieux</li>
+                        <li class="flex items-center gap-2"><div class="w-1.5 h-1.5 bg-gold rounded-full"></div> Sessions Questions/Réponses</li>
+                    </ul>
+                    <a href="#" class="text-navy font-bold text-sm border-b-2 border-gold pb-1 hover:text-gold hover:border-transparent transition-colors w-max">Voir les prochains invités</a>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Galerie Simple -->
+        <section class="bg-white py-20">
+            <div class="max-w-7xl mx-auto px-4">
+                <h2 class="font-serif text-3xl font-bold mb-12 text-center text-navy">Galerie Photo</h2>
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                    <img src="https://picsum.photos/seed/g1/400/400" class="rounded-xl w-full h-full object-cover shadow-md hover:scale-105 transition-transform duration-500">
+                    <img src="https://picsum.photos/seed/g2/400/400" class="rounded-xl w-full h-full object-cover shadow-md hover:scale-105 transition-transform duration-500">
+                    <img src="https://picsum.photos/seed/g3/400/400" class="rounded-xl w-full h-full object-cover shadow-md hover:scale-105 transition-transform duration-500">
+                    <img src="https://picsum.photos/seed/g4/400/400" class="rounded-xl w-full h-full object-cover shadow-md hover:scale-105 transition-transform duration-500">
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="bg-navy text-white pt-16 pb-8 text-center"><p class="text-gray-500 text-sm">&copy; 2024 La Tribune IESEG.</p></footer>
+    <script>lucide.createIcons();</script>
+</body>
+</html>
