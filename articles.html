@@ -12,6 +12,13 @@
             theme: { extend: { colors: { navy: '#011734', gold: '#FECB01', 'off-white': '#F8F9FA' }, fontFamily: { sans: ['Lato', 'sans-serif'], serif: ['Merriweather', 'serif'] } } }
         }
     </script>
+    <style>
+        .filter-btn.active {
+            background-color: #FECB01; /* gold */
+            color: #011734; /* navy */
+            border-color: #FECB01;
+        }
+    </style>
 </head>
 <body class="flex flex-col min-h-screen bg-off-white">
     <!-- NAV -->
@@ -56,14 +63,17 @@
             </div>
         </section>
 
-        <!-- Featured Article -->
+        <!-- Featured Article (Static Highlight) -->
         <section class="max-w-7xl mx-auto px-4 -mt-12 mb-20">
             <div class="bg-white rounded-[2rem] shadow-2xl overflow-hidden border border-gray-100 flex flex-col lg:flex-row">
                 <div class="lg:w-1/2 h-64 lg:h-auto overflow-hidden">
                     <img src="https://images.unsplash.com/photo-1507537362145-9f2382e03ecd?auto=format&fit=crop&q=80&w=800" class="w-full h-full object-cover hover:scale-105 transition-transform duration-700">
                 </div>
                 <div class="lg:w-1/2 p-8 md:p-12 flex flex-col justify-center">
-                    <div class="flex items-center gap-2 text-gold font-bold text-xs uppercase tracking-widest mb-4"><i data-lucide="book-open" class="w-4 h-4"></i> À la une</div>
+                    <div class="flex items-center gap-2 text-gold font-bold text-xs uppercase tracking-widest mb-4">
+                        <span class="bg-navy/10 px-2 py-1 rounded text-navy">#Rhétorique</span>
+                        <span class="flex items-center gap-1"><i data-lucide="book-open" class="w-4 h-4"></i> À la une</span>
+                    </div>
                     <h2 class="font-serif text-3xl md:text-4xl font-bold text-navy mb-6">L'Art de la Contradiction : Pourquoi débattre est essentiel</h2>
                     <p class="text-gray-600 text-lg mb-8">Dans un monde de plus en plus polarisé, apprendre à écouter l'autre et à construire une réponse argumentée est une compétence vitale.</p>
                     <div class="flex items-center justify-between mt-auto">
@@ -81,58 +91,144 @@
         <section class="max-w-7xl mx-auto px-4 mb-12 flex flex-wrap gap-4 border-b border-gray-200 pb-8">
             <div class="relative flex-grow md:flex-grow-0 md:w-96">
                 <i data-lucide="search" class="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 w-4 h-4"></i>
-                <input type="text" placeholder="Rechercher..." class="w-full pl-12 pr-4 py-3 bg-white border border-gray-200 rounded-xl focus:outline-none focus:border-gold">
+                <input type="text" id="search-input" placeholder="Rechercher un article..." class="w-full pl-12 pr-4 py-3 bg-white border border-gray-200 rounded-xl focus:outline-none focus:border-gold transition-colors">
             </div>
-            <button class="bg-gold text-navy px-4 py-2 rounded-lg font-bold text-sm">Tous</button>
-            <button class="bg-white text-gray-500 px-4 py-2 rounded-lg font-bold text-sm border border-gray-200 hover:border-gold hover:text-navy transition-all">Débat</button>
-            <button class="bg-white text-gray-500 px-4 py-2 rounded-lg font-bold text-sm border border-gray-200 hover:border-gold hover:text-navy transition-all">Rhétorique</button>
+            
+            <div id="filters-container" class="flex flex-wrap gap-2">
+                <button class="filter-btn active bg-white text-gray-500 px-4 py-2 rounded-lg font-bold text-sm border border-gray-200 hover:border-gold hover:text-navy transition-all" data-category="Tous">Tous</button>
+                <button class="filter-btn bg-white text-gray-500 px-4 py-2 rounded-lg font-bold text-sm border border-gray-200 hover:border-gold hover:text-navy transition-all" data-category="Débat">Débat</button>
+                <button class="filter-btn bg-white text-gray-500 px-4 py-2 rounded-lg font-bold text-sm border border-gray-200 hover:border-gold hover:text-navy transition-all" data-category="Rhétorique">Rhétorique</button>
+                <button class="filter-btn bg-white text-gray-500 px-4 py-2 rounded-lg font-bold text-sm border border-gray-200 hover:border-gold hover:text-navy transition-all" data-category="Société">Société</button>
+            </div>
         </section>
 
         <!-- Articles Grid -->
-        <section class="max-w-7xl mx-auto px-4 pb-24 grid md:grid-cols-2 lg:grid-cols-3 gap-10">
-            <!-- Article 2 -->
-            <article class="bg-white rounded-xl shadow-lg overflow-hidden hover:-translate-y-2 transition-transform duration-300">
-                <div class="h-48 overflow-hidden"><img src="https://images.unsplash.com/photo-1475721027785-f74dea327912?auto=format&fit=crop&q=80&w=800" class="w-full h-full object-cover hover:scale-110 transition-transform"></div>
-                <div class="p-6">
-                    <h3 class="font-serif text-xl font-bold mb-3 text-navy">Le Débat Parlementaire : Un sport de haut niveau</h3>
-                    <p class="text-gray-600 text-sm mb-4 line-clamp-3">Entre adrénaline et structure rigoureuse, retour sur les coulisses de notre victoire au championnat.</p>
-                    <a href="article.html?id=debat-parlementaire-sport-haut-niveau" class="flex items-center gap-2 text-navy font-bold text-sm hover:text-gold transition-colors">Lire la suite <i data-lucide="arrow-right" class="w-4 h-4"></i></a>
-                </div>
-            </article>
-
-            <!-- Article 3 -->
-            <article class="bg-white rounded-xl shadow-lg overflow-hidden hover:-translate-y-2 transition-transform duration-300">
-                <div class="h-48 overflow-hidden"><img src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&q=80&w=800" class="w-full h-full object-cover hover:scale-110 transition-transform"></div>
-                <div class="p-6">
-                    <h3 class="font-serif text-xl font-bold mb-3 text-navy">Rhétorique et Climat</h3>
-                    <p class="text-gray-600 text-sm mb-4 line-clamp-3">Comment les figures de style peuvent-elles aider à transformer des données scientifiques froides en une action concrète ?</p>
-                    <a href="article.html?id=rhetorique-et-climat" class="flex items-center gap-2 text-navy font-bold text-sm hover:text-gold transition-colors">Lire la suite <i data-lucide="arrow-right" class="w-4 h-4"></i></a>
-                </div>
-            </article>
-
-            <!-- Article 4 -->
-            <article class="bg-white rounded-xl shadow-lg overflow-hidden hover:-translate-y-2 transition-transform duration-300">
-                <div class="h-48 overflow-hidden"><img src="https://images.unsplash.com/photo-1499209974431-9dac3adaf471?auto=format&fit=crop&q=80&w=800" class="w-full h-full object-cover hover:scale-110 transition-transform"></div>
-                <div class="p-6">
-                    <h3 class="font-serif text-xl font-bold mb-3 text-navy">Le silence, cet outil méconnu</h3>
-                    <p class="text-gray-600 text-sm mb-4 line-clamp-3">Apprendre à ne rien dire pour mieux se faire entendre. Une analyse de la puissance des pauses.</p>
-                    <a href="article.html?id=silence-outil-meconnu" class="flex items-center gap-2 text-navy font-bold text-sm hover:text-gold transition-colors">Lire la suite <i data-lucide="arrow-right" class="w-4 h-4"></i></a>
-                </div>
-            </article>
-
-            <!-- Article 5 -->
-            <article class="bg-white rounded-xl shadow-lg overflow-hidden hover:-translate-y-2 transition-transform duration-300">
-                <div class="h-48 overflow-hidden"><img src="https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&q=80&w=800" class="w-full h-full object-cover hover:scale-110 transition-transform"></div>
-                <div class="p-6">
-                    <h3 class="font-serif text-xl font-bold mb-3 text-navy">Cicéron vs IA</h3>
-                    <p class="text-gray-600 text-sm mb-4 line-clamp-3">La machine pourra-t-elle un jour émouvoir ? L'âme d'un discours réside-t-elle dans les mots ?</p>
-                    <a href="article.html?id=ciceron-vs-ia" class="flex items-center gap-2 text-navy font-bold text-sm hover:text-gold transition-colors">Lire la suite <i data-lucide="arrow-right" class="w-4 h-4"></i></a>
-                </div>
-            </article>
+        <section class="max-w-7xl mx-auto px-4 pb-24">
+            <div id="articles-grid" class="grid md:grid-cols-2 lg:grid-cols-3 gap-10">
+                <!-- Articles will be injected here via JS -->
+            </div>
+            <div id="no-results" class="hidden text-center py-12">
+                <p class="text-xl text-gray-500">Aucun article ne correspond à votre recherche.</p>
+                <button onclick="resetFilters()" class="mt-4 text-gold font-bold underline">Réinitialiser les filtres</button>
+            </div>
         </section>
     </main>
 
     <footer class="bg-navy text-white pt-16 pb-8 text-center"><p class="text-gray-500 text-sm">&copy; 2024 La Tribune IESEG.</p></footer>
-    <script>lucide.createIcons();</script>
+    
+    <script>
+        // Data Source
+        const articles = [
+          {
+            id: "debat-parlementaire-sport-haut-niveau",
+            title: "Le Débat Parlementaire : Un sport de haut niveau",
+            category: "Débat",
+            excerpt: "Entre adrénaline et structure rigoureuse, retour sur les coulisses de notre victoire au championnat.",
+            image: "https://images.unsplash.com/photo-1475721027785-f74dea327912?auto=format&fit=crop&q=80&w=800"
+          },
+          {
+            id: "rhetorique-et-climat",
+            title: "Rhétorique et Climat",
+            category: "Société",
+            excerpt: "Comment les figures de style peuvent-elles aider à transformer des données scientifiques froides en une action concrète ?",
+            image: "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&q=80&w=800"
+          },
+          {
+            id: "silence-outil-meconnu",
+            title: "Le silence, cet outil méconnu",
+            category: "Rhétorique",
+            excerpt: "Apprendre à ne rien dire pour mieux se faire entendre. Une analyse de la puissance des pauses.",
+            image: "https://images.unsplash.com/photo-1499209974431-9dac3adaf471?auto=format&fit=crop&q=80&w=800"
+          },
+          {
+            id: "ciceron-vs-ia",
+            title: "Cicéron vs IA",
+            category: "Société",
+            excerpt: "La machine pourra-t-elle un jour émouvoir ? L'âme d'un discours réside-t-elle dans les mots ?",
+            image: "https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&q=80&w=800"
+          }
+        ];
+
+        // State
+        let currentCategory = 'Tous';
+        let searchQuery = '';
+
+        // Elements
+        const gridContainer = document.getElementById('articles-grid');
+        const searchInput = document.getElementById('search-input');
+        const filterBtns = document.querySelectorAll('.filter-btn');
+        const noResults = document.getElementById('no-results');
+
+        // Functions
+        function renderArticles() {
+            gridContainer.innerHTML = '';
+            
+            const filtered = articles.filter(article => {
+                const matchesCategory = currentCategory === 'Tous' || article.category === currentCategory;
+                const matchesSearch = article.title.toLowerCase().includes(searchQuery.toLowerCase()) || 
+                                      article.excerpt.toLowerCase().includes(searchQuery.toLowerCase());
+                return matchesCategory && matchesSearch;
+            });
+
+            if (filtered.length === 0) {
+                noResults.classList.remove('hidden');
+            } else {
+                noResults.classList.add('hidden');
+                filtered.forEach(article => {
+                    const html = `
+                    <article class="bg-white rounded-xl shadow-lg overflow-hidden hover:-translate-y-2 transition-transform duration-300 flex flex-col">
+                        <div class="h-48 overflow-hidden relative">
+                            <img src="${article.image}" class="w-full h-full object-cover hover:scale-110 transition-transform">
+                            <div class="absolute top-4 right-4 bg-navy/90 text-gold text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider">
+                                #${article.category}
+                            </div>
+                        </div>
+                        <div class="p-6 flex flex-col flex-grow">
+                            <h3 class="font-serif text-xl font-bold mb-3 text-navy">${article.title}</h3>
+                            <p class="text-gray-600 text-sm mb-4 line-clamp-3 flex-grow">${article.excerpt}</p>
+                            <a href="article.html?id=${article.id}" class="flex items-center gap-2 text-navy font-bold text-sm hover:text-gold transition-colors mt-auto">
+                                Lire la suite <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                            </a>
+                        </div>
+                    </article>
+                    `;
+                    gridContainer.innerHTML += html;
+                });
+                lucide.createIcons();
+            }
+        }
+
+        function handleFilterClick(e) {
+            // Update UI
+            filterBtns.forEach(btn => btn.classList.remove('active'));
+            e.target.classList.add('active');
+            
+            // Update State
+            currentCategory = e.target.dataset.category;
+            renderArticles();
+        }
+
+        function handleSearchInput(e) {
+            searchQuery = e.target.value;
+            renderArticles();
+        }
+
+        function resetFilters() {
+            searchQuery = '';
+            searchInput.value = '';
+            currentCategory = 'Tous';
+            filterBtns.forEach(btn => btn.classList.remove('active'));
+            filterBtns[0].classList.add('active'); // Select 'Tous'
+            renderArticles();
+        }
+
+        // Listeners
+        filterBtns.forEach(btn => btn.addEventListener('click', handleFilterClick));
+        searchInput.addEventListener('input', handleSearchInput);
+
+        // Initial Render
+        renderArticles();
+        lucide.createIcons();
+    </script>
 </body>
 </html>
