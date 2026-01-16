@@ -1,0 +1,752 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>La Tribune IESEG Paris</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+    
+    <!-- Lucide Icons (Remplacement des composants React Lucide) -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <!-- External Widgets -->
+    <script src="https://elfsightcdn.com/platform.js" async></script>
+
+    <style>
+        :root {
+            --navy: #011734;
+            --gold: #FECB01;
+            --off-white: #F8F9FA;
+        }
+        body {
+            font-family: 'Lato', sans-serif;
+            background-color: var(--off-white);
+            color: var(--navy);
+            margin: 0;
+            padding: 0;
+        }
+        h1, h2, h3, h4, .serif {
+            font-family: 'Merriweather', serif;
+        }
+        
+        /* Animations */
+        @keyframes scroll {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(calc(-250px * 7)); }
+        }
+        .animate-infinite-scroll {
+            animation: scroll 40s linear infinite;
+        }
+        .animate-infinite-scroll:hover {
+            animation-play-state: paused;
+        }
+
+        /* Animations d'entrée */
+        .fade-in {
+            animation: fadeIn 0.7s ease-out forwards;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Masquage branding Elfsight */
+        a[href*="elfsight.com"], 
+        [class*="elfsight-app"] > a {
+            display: none !important;
+            opacity: 0 !important;
+            height: 0 !important;
+            pointer-events: none !important;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #011734;
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #000d1f;
+        }
+
+        /* Utilitaires de masquage pour le routeur SPA */
+        .page-section {
+            display: none;
+        }
+        .page-section.active {
+            display: block;
+        }
+    </style>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        navy: '#011734',
+                        gold: '#FECB01',
+                        'off-white': '#F8F9FA',
+                        'navy-light': '#0a2342' // Ajout pour le footer input
+                    }
+                }
+            }
+        }
+    </script>
+<script type="importmap">
+{
+  "imports": {
+    "react": "https://esm.sh/react@^19.2.3",
+    "react-dom/": "https://esm.sh/react-dom@^19.2.3/",
+    "react/": "https://esm.sh/react@^19.2.3/",
+    "react-router-dom": "https://esm.sh/react-router-dom@^7.12.0",
+    "lucide-react": "https://esm.sh/lucide-react@^0.562.0"
+  }
+}
+</script>
+</head>
+<body class="flex flex-col min-h-screen">
+
+    <!-- HEADER -->
+    <header class="sticky top-0 z-50 bg-navy text-white shadow-lg border-b border-white/5">
+        <div class="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-12">
+            <div class="flex justify-between items-center h-20">
+                
+                <!-- LOGO GAUCHE -->
+                <div class="flex-1 flex justify-start items-center">
+                    <a href="https://www.ieseg.fr" target="_blank" rel="noopener noreferrer" class="hover:opacity-80 transition-opacity">
+                        <img src="https://raw.githubusercontent.com/EwCg/La_Tribune_Resources/main/12%20(3).png" alt="IÉSEG Logo" class="h-10 md:h-12 w-auto object-contain">
+                    </a>
+                </div>
+
+                <!-- NAV DESKTOP -->
+                <nav class="hidden md:flex flex-[2] justify-center items-center space-x-10 lg:space-x-14" id="desktop-nav">
+                    <!-- Links générés en JS -->
+                </nav>
+
+                <!-- ACTIONS & LOGO DROITE -->
+                <div class="flex-1 flex justify-end items-center space-x-6">
+                    <a href="https://forms.gle/your-form-id" target="_blank" class="hidden lg:block bg-gold text-navy px-6 py-2 rounded-full font-bold text-sm transform transition-all hover:scale-105 shadow-md hover:shadow-gold/20">
+                        Rejoignez-nous
+                    </a>
+
+                    <a href="#home" class="flex items-center space-x-3 shrink-0 border-l border-white/10 pl-6 group">
+                        <div class="text-right leading-tight hidden xl:block">
+                            <span class="serif font-bold text-sm lg:text-base uppercase tracking-tighter">
+                                La Tribune <br/>
+                                <span class="text-gold">IÉSEG Paris</span>
+                            </span>
+                        </div>
+                        <div class="bg-gold p-2.5 rounded-xl shadow-sm transition-transform group-hover:rotate-12">
+                            <i data-lucide="mic-2" class="text-navy w-5 h-5"></i>
+                        </div>
+                    </a>
+
+                    <!-- Mobile Menu Button -->
+                    <div class="md:hidden flex items-center">
+                        <button id="mobile-menu-btn" class="text-gray-300 hover:text-white focus:outline-none p-2">
+                            <i data-lucide="menu" class="w-7 h-7"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Nav Overlay -->
+        <div id="mobile-menu" class="hidden md:hidden bg-navy border-t border-white/10 fade-in">
+            <div class="px-4 pt-4 pb-6 space-y-2" id="mobile-nav-links">
+                <!-- Links générés en JS -->
+            </div>
+            <div class="px-4 pb-6">
+                <a href="https://forms.gle/your-form-id" target="_blank" class="block w-full text-center bg-gold text-navy px-6 py-4 rounded-xl font-bold text-lg shadow-xl">
+                    Rejoignez-nous
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- CONTENT CONTAINER -->
+    <div id="app-content" class="flex-grow">
+        <!-- Les pages seront injectées ici par JavaScript -->
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="bg-navy text-white pt-16 pb-8">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-12 mb-12">
+                <div class="col-span-1">
+                    <h3 class="serif text-2xl font-bold mb-4">
+                        LA TRIBUNE <span class="text-gold">IESEG</span>
+                    </h3>
+                    <p class="text-gray-400 text-sm leading-relaxed">
+                        Association d'art oratoire de l'IÉSEG School of Management. 
+                        Promouvoir l'excellence rhétorique et le débat d'idées depuis 2017.
+                    </p>
+                </div>
+                <div>
+                    <h4 class="font-bold text-gold mb-4 uppercase tracking-wider text-xs">Contact</h4>
+                    <ul class="space-y-2 text-sm text-gray-400">
+                        <li class="flex items-center gap-2"><i data-lucide="mail" class="w-4 h-4"></i> latribune@ieseg.fr</li>
+                        <li>Campus Paris : La Défense</li>
+                        <li>Campus Lille : Vauban</li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-bold text-gold mb-4 uppercase tracking-wider text-xs">Newsletter</h4>
+                    <p class="text-sm text-gray-400 mb-4">Restez informé de nos prochains débats.</p>
+                    <form class="flex gap-2" onsubmit="event.preventDefault(); alert('Merci de votre inscription !');">
+                        <input type="email" placeholder="votre@email.com" class="bg-navy-light border border-gray-700 rounded-lg px-3 py-2 text-sm w-full focus:outline-none focus:border-gold">
+                        <button class="bg-gold text-navy px-4 py-2 rounded-lg font-bold text-sm hover:bg-white transition-colors">Ok</button>
+                    </form>
+                </div>
+            </div>
+            <div class="pt-8 border-t border-gray-800 flex flex-col md:flex-row justify-between items-center gap-4">
+                <p class="text-xs text-gray-500">© 2024 La Tribune IESEG Paris. Tous droits réservés.</p>
+                <div class="flex space-x-6">
+                    <a href="https://www.linkedin.com/company/la-tribune-ieseg/posts/?feedView=all" target="_blank" class="text-gray-400 hover:text-gold transition-colors"><i data-lucide="linkedin" class="w-5 h-5"></i></a>
+                    <a href="https://www.instagram.com/latribune_iesegparis/" target="_blank" class="text-gray-400 hover:text-gold transition-colors"><i data-lucide="instagram" class="w-5 h-5"></i></a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JAVASCRIPT LOGIC -->
+    <script>
+        // --- CONSTANTS & DATA ---
+        const TEAM_MEMBERS = [
+            { id: '1', name: 'Alexandre Dupont', role: 'Président', photo: 'https://picsum.photos/seed/alex/400/400', linkedin: '#' },
+            { id: '2', name: 'Sophie Martin', role: 'Vice-Présidente', photo: 'https://picsum.photos/seed/sophie/400/400', linkedin: '#' },
+            { id: '3', name: 'Thomas Bernard', role: 'Secrétaire Général', photo: 'https://picsum.photos/seed/thomas/400/400', linkedin: '#' },
+            { id: '4', name: 'Léa Leroy', role: 'Trésorière', photo: 'https://picsum.photos/seed/lea/400/400', linkedin: '#' },
+            { id: '5', name: 'Antoine Petit', role: 'Responsable Événementiel', photo: 'https://picsum.photos/seed/antoine/400/400', linkedin: '#' },
+            { id: '6', name: 'Camille Moreau', role: 'Responsable Communication', photo: 'https://picsum.photos/seed/camille/400/400', linkedin: '#' }
+        ];
+
+        const PARTNERS = [
+            { name: 'FFDE', logo: 'https://raw.githubusercontent.com/EwCg/La_Tribune_Resources/main/FFDE.jpg' },
+            { name: 'CINUP', logo: 'https://raw.githubusercontent.com/EwCg/La_Tribune_Resources/main/CINUP.jpg' }
+        ];
+
+        const GALLERY_IMAGES = [
+            'https://picsum.photos/seed/event1/800/600', 'https://picsum.photos/seed/event2/800/600',
+            'https://picsum.photos/seed/event3/800/600', 'https://picsum.photos/seed/event4/800/600',
+            'https://picsum.photos/seed/event5/800/600', 'https://picsum.photos/seed/event6/800/600',
+            'https://picsum.photos/seed/event7/800/600', 'https://picsum.photos/seed/event8/800/600'
+        ];
+
+        const MOCK_ARTICLES = [
+            {
+                slug: "art-de-la-contradiction",
+                title: "L'Art de la Contradiction : Pourquoi débattre est essentiel",
+                author: "Alexandre Dupont",
+                excerpt: "Dans un monde de plus en plus polarisé, apprendre à écouter l'autre et à construire une réponse argumentée est une compétence vitale.",
+                content: "Le débat n'est pas une simple confrontation d'ego, mais une quête collective de vérité. À La Tribune, nous croyons que la contradiction est le moteur de la pensée critique. En apprenant à défendre des positions qui ne sont pas nécessairement les nôtres, nous développons une empathie intellectuelle indispensable. Le débat parlementaire nous force à structurer notre pensée sous pression, à écouter activement l'adversaire pour identifier les failles de son raisonnement, et à y répondre avec élégance et précision. C'est cette école de la rigueur que nous transmettons chaque semaine à nos membres.",
+                coverImage: "https://images.unsplash.com/photo-1507537362145-9f2382e03ecd?auto=format&fit=crop&q=80&w=800",
+                date: "12/03/2024"
+            },
+            {
+                slug: "debat-parlementaire-sport-haut-niveau",
+                title: "Le Débat Parlementaire : Un sport de haut niveau",
+                author: "Sophie Martin",
+                excerpt: "Entre adrénaline et structure rigoureuse, retour sur les coulisses de notre victoire au championnat de France 2021.",
+                content: "Le championnat de France de débat parlementaire n'est pas qu'une affaire de mots, c'est une épreuve d'endurance mentale. Pendant des mois, nos équipes se sont entraînées à analyser des motions complexes en moins de 15 minutes. Lors de la finale de 2021, la tension était palpable. Chaque argument devait être pesé, chaque envolée lyrique justifiée. Cette victoire a marqué un tournant pour La Tribune, prouvant que l'IÉSEG a sa place parmi l'élite de l'éloquence française. Ce succès repose sur une méthode de travail collective et un soutien indéfectible entre les membres du bureau et les orateurs.",
+                coverImage: "https://images.unsplash.com/photo-1475721027785-f74dea327912?auto=format&fit=crop&q=80&w=800",
+                date: "05/02/2024"
+            },
+            {
+                slug: "rhetorique-et-climat",
+                title: "Rhétorique et Climat : Comment porter la voix de l'urgence",
+                author: "Camille Moreau",
+                excerpt: "Comment les figures de style peuvent-elles aider à transformer des données scientifiques froides en une action concrète ?",
+                content: "Face à l'urgence climatique, les faits seuls ne suffisent plus. Il faut savoir émouvoir pour mobiliser. La rhétorique offre des outils puissants pour rendre l'invisible visible et le futur lointain immédiat. L'utilisation de l'hypotypose, par exemple, permet de décrire une scène avec une telle vivacité qu'elle semble se dérouler sous les yeux de l'auditeur. En tant qu'orateurs, nous avons la responsabilité d'utiliser notre art pour servir des causes qui nous dépassent. Cet article explore comment marier la rigueur scientifique avec la puissance du logos, du pathos et de l'ethos pour susciter un véritable engagement citoyen.",
+                coverImage: "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&q=80&w=800",
+                date: "20/01/2024"
+            },
+            {
+                slug: "silence-outil-meconnu",
+                title: "Le silence, cet outil méconnu de l'orateur",
+                author: "Thomas Bernard",
+                excerpt: "Apprendre à ne rien dire pour mieux se faire entendre. Une analyse de la puissance des pauses dans le discours.",
+                content: "Beaucoup d'orateurs débutants craignent le silence comme un vide à combler. Pourtant, c'est dans le silence que naît la tension dramatique. Une pause bien placée après une question rhétorique force l'auditoire à réfléchir. Un silence prolongé avant une conclusion donne du poids à la parole qui va suivre. Maîtriser son rythme, c'est savoir orchestrer les silences. Dans cet article, nous analysons les discours de grands orateurs contemporains pour comprendre comment ils utilisent l'absence de mots pour souligner l'importance de leur message.",
+                coverImage: "https://images.unsplash.com/photo-1499209974431-9dac3adaf471?auto=format&fit=crop&q=80&w=800",
+                date: "10/01/2024"
+            },
+            {
+                slug: "ciceron-vs-ia",
+                title: "Cicéron vs IA : La machine pourra-t-elle un jour émouvoir ?",
+                author: "Antoine Petit",
+                excerpt: "La technologie générative arrive dans l'éloquence. Mais l'âme d'un discours réside-t-elle dans les mots ou dans celui qui les porte ?",
+                content: "L'intelligence artificielle peut désormais générer des discours structurés et argumentés en quelques secondes. Mais peut-elle réellement faire preuve d'éloquence ? L'éloquence n'est pas seulement la justesse des mots, c'est l'incarnation d'un message par un corps et une voix. C'est l'imperfection humaine, l'hésitation sincère ou le tremblement d'émotion qui crée le lien avec l'auditoire. Si l'IA est un assistant formidable pour la recherche documentaire, elle reste incapable de remplacer l'ethos de l'orateur : sa crédibilité morale et sa présence scénique.",
+                coverImage: "https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&q=80&w=800",
+                date: "28/12/2023"
+            }
+        ];
+
+        // --- COMPONENTS RENDERERS ---
+
+        const renderBlogPostCard = (article, isPreview = false) => {
+            const hoverClass = !isPreview ? 'hover:-translate-y-2 hover:shadow-2xl' : '';
+            return `
+            <div class="bg-white rounded-xl overflow-hidden shadow-lg transform transition-all duration-300 ${hoverClass}">
+                <div class="h-48 overflow-hidden relative">
+                    <img src="${article.coverImage || 'https://picsum.photos/seed/default/800/400'}" alt="${article.title}" class="w-full h-full object-cover transition-transform duration-500 hover:scale-110">
+                    ${isPreview ? `<div class="absolute top-4 right-4 bg-gold text-navy text-[10px] font-bold px-2 py-1 rounded uppercase tracking-widest">Aperçu</div>` : ''}
+                </div>
+                <div class="p-6">
+                    <div class="flex items-center gap-4 text-xs text-gray-500 mb-3">
+                        <span class="flex items-center gap-1"><i data-lucide="user" class="w-3 h-3"></i> ${article.author || 'Anonyme'}</span>
+                        <span class="flex items-center gap-1"><i data-lucide="calendar" class="w-3 h-3"></i> ${article.date || 'Date'}</span>
+                    </div>
+                    <h3 class="serif text-xl font-bold mb-3 text-navy leading-tight line-clamp-2">${article.title}</h3>
+                    <p class="text-gray-600 text-sm mb-4 line-clamp-3 leading-relaxed">${article.excerpt}</p>
+                    ${!isPreview ? `
+                    <a href="#article/${article.slug}" class="flex items-center gap-2 text-navy font-bold text-sm hover:text-gold transition-colors group">
+                        Lire la suite <i data-lucide="arrow-right" class="w-4 h-4 group-hover:translate-x-1 transition-transform"></i>
+                    </a>` : ''}
+                </div>
+            </div>`;
+        };
+
+        // --- PAGES RENDERERS ---
+
+        const renderHome = () => {
+            const galleryHtml = [...GALLERY_IMAGES, ...GALLERY_IMAGES].map((img, i) => `
+                <div class="flex-shrink-0 w-[250px] h-[180px] rounded-xl overflow-hidden shadow-lg border-2 border-white/10 grayscale hover:grayscale-0 transition-all duration-500">
+                    <img src="${img}" class="w-full h-full object-cover" alt="Event ${i}">
+                </div>
+            `).join('');
+
+            return `
+            <div class="fade-in">
+                <!-- Hero -->
+                <section class="relative h-[85vh] flex items-center overflow-hidden">
+                    <div class="absolute inset-0">
+                        <img src="https://raw.githubusercontent.com/EwCg/La_Tribune_Resources/main/milky-way.jpg" class="w-full h-full object-cover" alt="Hero">
+                        <div class="absolute inset-0 bg-navy/70 mix-blend-multiply"></div>
+                    </div>
+                    <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-white">
+                        <div class="max-w-2xl">
+                            <h1 class="serif text-5xl md:text-7xl font-bold mb-6 leading-tight">
+                                Trouvez Votre Voix, <br/><span class="text-gold">Inspirez le Monde.</span>
+                            </h1>
+                            <p class="text-xl text-gray-300 mb-10 leading-relaxed font-light">
+                                La Tribune IÉSEG est l'association de référence pour l'art oratoire, 
+                                le débat parlementaire et l'éloquence au sein de l'IÉSEG School of Management.
+                            </p>
+                        </div>
+                    </div>
+                </section>
+                
+                <!-- Infinite Carousel -->
+                <section class="bg-navy py-12 overflow-hidden">
+                    <div class="flex space-x-8 animate-infinite-scroll">
+                        ${galleryHtml}
+                    </div>
+                </section>
+
+                <!-- Value Props -->
+                <section class="py-24 bg-white">
+                    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-12 text-center">
+                            <div class="p-8 rounded-2xl hover:bg-off-white transition-colors">
+                                <div class="bg-gold/10 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-6">
+                                    <i data-lucide="award" class="text-gold w-8 h-8"></i>
+                                </div>
+                                <h3 class="serif text-2xl font-bold mb-4">Excellence</h3>
+                                <p class="text-gray-600 leading-relaxed">Champions de France de débat 2021. Nous visons le plus haut niveau lors des compétitions nationales.</p>
+                            </div>
+                            <div class="p-8 rounded-2xl hover:bg-off-white transition-colors">
+                                <div class="bg-gold/10 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-6">
+                                    <i data-lucide="users" class="text-gold w-8 h-8"></i>
+                                </div>
+                                <h3 class="serif text-2xl font-bold mb-4">Transmission</h3>
+                                <p class="text-gray-600 leading-relaxed">Formation régulière de nos membres en interne pour assurer une transmission du savoir efficace.</p>
+                            </div>
+                            <div class="p-8 rounded-2xl hover:bg-off-white transition-colors">
+                                <div class="bg-gold/10 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-6">
+                                    <i data-lucide="book-open" class="text-gold w-8 h-8"></i>
+                                </div>
+                                <h3 class="serif text-2xl font-bold mb-4">Engagement</h3>
+                                <p class="text-gray-600 leading-relaxed">Un espace de liberté et de débat pour forger l'esprit critique et l'écoute active des leaders de demain.</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Social Widget -->
+                <section class="py-24 bg-off-white">
+                    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                        <div class="text-center mb-16">
+                            <h2 class="serif text-4xl font-bold mb-4">Actualités Récentes</h2>
+                            <div class="w-24 h-1 bg-gold mx-auto mb-6"></div>
+                            <p class="text-gray-500 max-w-lg mx-auto italic">Retrouvez nos derniers débats et événements en direct sur LinkedIn.</p>
+                        </div>
+                        <div class="bg-white rounded-[2rem] shadow-2xl border border-gray-100 overflow-hidden min-h-[500px] relative">
+                            <div class="elfsight-app-f74a0c0e-f46a-4dea-acc8-aeb8b742d84e" data-elfsight-app-lazy></div>
+                        </div>
+                    </div>
+                </section>
+            </div>`;
+        };
+
+        const renderAbout = () => {
+            const membersHtml = TEAM_MEMBERS.map(m => `
+                <div class="group flex flex-col items-center">
+                    <div class="relative mb-6">
+                        <div class="w-48 h-48 rounded-full overflow-hidden border-4 border-white shadow-xl group-hover:border-gold transition-colors duration-300">
+                            <img src="${m.photo}" class="w-full h-full object-cover" alt="${m.name}">
+                        </div>
+                        <a href="${m.linkedin}" class="absolute bottom-2 right-2 bg-gold text-navy p-3 rounded-full shadow-lg transform translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300">
+                            <i data-lucide="linkedin" class="w-5 h-5"></i>
+                        </a>
+                    </div>
+                    <h3 class="serif text-xl font-bold text-navy">${m.name}</h3>
+                    <p class="text-gold font-bold uppercase tracking-wider text-xs mt-1">${m.role}</p>
+                </div>
+            `).join('');
+
+            const partnersHtml = PARTNERS.map(p => `
+                <div class="bg-white p-12 rounded-3xl shadow-lg border border-gray-100 flex items-center justify-center group hover:shadow-2xl hover:border-gold transition-all duration-500">
+                    <img src="${p.logo}" alt="${p.name}" class="h-40 md:h-56 w-auto object-contain transition-transform duration-500 group-hover:scale-110">
+                </div>
+            `).join('');
+
+            return `
+            <main class="py-20 fade-in">
+                <!-- History -->
+                <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-24">
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+                        <div>
+                            <h1 class="serif text-5xl font-bold mb-8 text-navy">Une Tradition d'<span class="text-gold">Éloquence</span></h1>
+                            <p class="text-lg text-gray-600 mb-6 leading-relaxed">Fondée en 2017, La Tribune IÉSEG est née de la volonté d'offrir aux étudiants un espace privilégié pour cultiver l'art du discours.</p>
+                            <div class="flex gap-12 border-t border-gray-200 pt-8">
+                                <div><div class="text-4xl font-bold text-navy">2017</div><div class="text-gray-500 text-sm uppercase font-bold mt-1">Fondation</div></div>
+                                <div><div class="text-4xl font-bold text-navy">30+</div><div class="text-gray-500 text-sm uppercase font-bold mt-1">Membres Actifs</div></div>
+                                <div><div class="text-4xl font-bold text-navy">2021</div><div class="text-gray-500 text-sm uppercase font-bold mt-1">Titre National</div></div>
+                            </div>
+                        </div>
+                        <div class="relative">
+                            <img src="https://images.unsplash.com/photo-1524178232363-1fb28f74b671?auto=format&fit=crop&q=80&w=1000" class="rounded-3xl shadow-2xl relative z-10" alt="Bureau">
+                            <div class="absolute -top-6 -right-6 w-full h-full border-4 border-gold rounded-3xl -z-0"></div>
+                        </div>
+                    </div>
+                </section>
+                
+                <!-- Values -->
+                <section class="bg-navy py-24 text-white mb-24">
+                    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                        <div class="text-center mb-16">
+                            <h2 class="serif text-4xl font-bold mb-4">Nos Valeurs Piliers</h2>
+                            <div class="w-24 h-1 bg-gold mx-auto"></div>
+                        </div>
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                            <div class="bg-white/5 backdrop-blur-sm p-10 rounded-2xl border border-white/10 hover:bg-gold hover:text-navy transition-all duration-300 group">
+                                <h3 class="serif text-2xl font-bold mb-4 group-hover:text-navy">Partage</h3>
+                                <p class="text-gray-400 group-hover:text-navy/80 leading-relaxed">L'art oratoire ne vaut rien s'il n'est pas partagé pour élever les autres.</p>
+                            </div>
+                            <div class="bg-white/5 backdrop-blur-sm p-10 rounded-2xl border border-white/10 hover:bg-gold hover:text-navy transition-all duration-300 group">
+                                <h3 class="serif text-2xl font-bold mb-4 group-hover:text-navy">Ambition</h3>
+                                <p class="text-gray-400 group-hover:text-navy/80 leading-relaxed">Repousser sans cesse ses limites pour atteindre l'excellence rhétorique.</p>
+                            </div>
+                            <div class="bg-white/5 backdrop-blur-sm p-10 rounded-2xl border border-white/10 hover:bg-gold hover:text-navy transition-all duration-300 group">
+                                <h3 class="serif text-2xl font-bold mb-4 group-hover:text-navy">Respect</h3>
+                                <p class="text-gray-400 group-hover:text-navy/80 leading-relaxed">Écouter l'autre, valoriser la contradiction et cultiver la bienveillance.</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Bureau -->
+                <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-24">
+                    <div class="text-center mb-16">
+                        <h2 class="serif text-4xl font-bold mb-4">Le Bureau</h2>
+                        <p class="text-gray-500">Les visages derrière l'excellence de La Tribune</p>
+                    </div>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-12">
+                        ${membersHtml}
+                    </div>
+                </section>
+
+                <!-- Partners -->
+                <section class="bg-off-white py-24">
+                    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+                        <h4 class="text-navy font-bold uppercase tracking-widest text-sm mb-16">Nos Partenaires & Fédérations</h4>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-12 max-w-4xl mx-auto">
+                            ${partnersHtml}
+                        </div>
+                    </div>
+                </section>
+            </main>`;
+        };
+
+        const renderEvents = () => {
+            const imagesHtml = GALLERY_IMAGES.map((img, i) => `
+                <div class="group relative aspect-square rounded-2xl overflow-hidden shadow-lg cursor-pointer">
+                    <img src="${img}" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-125" alt="Gallery ${i}">
+                    <div class="absolute inset-0 bg-navy/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                        <i data-lucide="zoom-in" class="text-white w-8 h-8 transform scale-50 group-hover:scale-100 transition-transform duration-300"></i>
+                    </div>
+                </div>
+            `).join('');
+
+            return `
+            <main class="fade-in">
+                <section class="bg-navy py-24 text-white">
+                    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+                        <h1 class="serif text-5xl font-bold mb-6">Nos Formats d'Éveil</h1>
+                        <p class="text-xl text-gray-400 max-w-2xl mx-auto font-light">De la joute verbale enflammée à la plaidoirie solennelle.</p>
+                    </div>
+                </section>
+
+                <section class="py-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+                        <div class="bg-white p-12 rounded-3xl shadow-xl border border-gray-100 hover:border-gold transition-colors group">
+                            <div class="bg-gold w-16 h-16 rounded-2xl flex items-center justify-center mb-8 transform -rotate-6 group-hover:rotate-0 transition-transform">
+                                <i data-lucide="gavel" class="text-navy w-8 h-8"></i>
+                            </div>
+                            <h2 class="serif text-3xl font-bold mb-6">Le Débat Parlementaire</h2>
+                            <p class="text-gray-600 leading-relaxed mb-6">Le format "Choc des Idées". Deux équipes de quatre s'affrontent sur une motion de société ou géopolitique.</p>
+                            <ul class="space-y-3 text-sm text-gray-500 mb-8">
+                                <li class="flex items-center gap-2"><div class="w-1.5 h-1.5 bg-gold rounded-full"></div> 7 minutes par discours</li>
+                                <li class="flex items-center gap-2"><div class="w-1.5 h-1.5 bg-gold rounded-full"></div> Points d'information (POI) autorisés</li>
+                            </ul>
+                        </div>
+                        <div class="bg-white p-12 rounded-3xl shadow-xl border border-gray-100 hover:border-gold transition-colors group">
+                            <div class="bg-gold w-16 h-16 rounded-2xl flex items-center justify-center mb-8 transform rotate-6 group-hover:rotate-0 transition-transform">
+                                <i data-lucide="message-square" class="text-navy w-8 h-8"></i>
+                            </div>
+                            <h2 class="serif text-3xl font-bold mb-6">La Plaidoirie</h2>
+                            <p class="text-gray-600 leading-relaxed mb-6">L'art de convaincre seul face au jury. Sur un sujet souvent abstrait ou humoristique.</p>
+                            <ul class="space-y-3 text-sm text-gray-500 mb-8">
+                                <li class="flex items-center gap-2"><div class="w-1.5 h-1.5 bg-gold rounded-full"></div> 5 à 8 minutes de spectacle</li>
+                                <li class="flex items-center gap-2"><div class="w-1.5 h-1.5 bg-gold rounded-full"></div> Mise en scène et théâtralité</li>
+                            </ul>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="bg-off-white py-24">
+                    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                        <div class="text-center mb-16">
+                            <h2 class="serif text-4xl font-bold mb-4">Instants Choisis</h2>
+                            <p class="text-gray-500">Retour sur nos derniers moments forts</p>
+                        </div>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                            ${imagesHtml}
+                        </div>
+                    </div>
+                </section>
+            </main>`;
+        };
+
+        const renderArticles = () => {
+            const featured = MOCK_ARTICLES[0];
+            const others = MOCK_ARTICLES.slice(1);
+            const othersHtml = others.map(a => renderBlogPostCard(a)).join('');
+
+            return `
+            <main class="fade-in">
+                <section class="bg-navy py-20 text-white">
+                    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                        <div class="max-w-3xl">
+                            <h1 class="serif text-5xl font-bold mb-6">Nos <span class="text-gold">Analyses</span> & Articles</h1>
+                            <p class="text-xl text-gray-400 font-light leading-relaxed">Décryptage de l'actualité, techniques de rhétorique et retours d'expérience.</p>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-12 mb-20">
+                    <div class="bg-white rounded-[2rem] shadow-2xl overflow-hidden border border-gray-100 flex flex-col lg:flex-row">
+                        <div class="lg:w-1/2 h-64 lg:h-auto overflow-hidden">
+                            <img src="${featured.coverImage}" alt="${featured.title}" class="w-full h-full object-cover transition-transform duration-700 hover:scale-105">
+                        </div>
+                        <div class="lg:w-1/2 p-8 md:p-12 flex flex-col justify-center">
+                            <div class="flex items-center gap-2 text-gold font-bold text-xs uppercase tracking-widest mb-4">
+                                <i data-lucide="book-open" class="w-3 h-3"></i> À la une
+                            </div>
+                            <h2 class="serif text-3xl md:text-4xl font-bold text-navy mb-6 leading-tight">${featured.title}</h2>
+                            <p class="text-gray-600 text-lg mb-8 leading-relaxed">${featured.excerpt}</p>
+                            <div class="flex items-center justify-between mt-auto">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-10 h-10 rounded-full bg-navy/10 flex items-center justify-center text-navy font-bold">${featured.author.charAt(0)}</div>
+                                    <div><div class="text-sm font-bold text-navy">${featured.author}</div><div class="text-xs text-gray-400">${featured.date}</div></div>
+                                </div>
+                                <a href="#article/${featured.slug}" class="bg-navy text-gold px-6 py-2 rounded-full font-bold text-sm hover:bg-gold hover:text-navy transition-colors">Lire l'article</a>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-24">
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+                        ${othersHtml}
+                    </div>
+                </section>
+            </main>`;
+        };
+
+        const renderArticleDetail = (slug) => {
+            const article = MOCK_ARTICLES.find(a => a.slug === slug);
+            if (!article) return `<div class="p-20 text-center"><h2 class="text-2xl font-bold">Article introuvable</h2><a href="#articles" class="text-gold">Retour</a></div>`;
+
+            // Simulation de paragraphes
+            const paragraphs = article.content.split('. ').map(p => `<p class="mb-4">${p}.</p>`).join('');
+
+            return `
+            <main class="fade-in bg-white">
+                <div class="relative h-[60vh] w-full">
+                    <img src="${article.coverImage}" alt="${article.title}" class="w-full h-full object-cover">
+                    <div class="absolute inset-0 bg-navy/40"></div>
+                    <div class="absolute bottom-0 left-0 right-0 p-8 md:p-16 text-white bg-gradient-to-t from-navy/90 to-transparent">
+                        <div class="max-w-4xl mx-auto">
+                            <a href="#articles" class="flex items-center gap-2 text-gold font-bold mb-6 hover:translate-x-[-4px] transition-transform">
+                                <i data-lucide="arrow-left" class="w-4 h-4"></i> Retour aux articles
+                            </a>
+                            <h1 class="serif text-4xl md:text-6xl font-bold mb-6 leading-tight">${article.title}</h1>
+                            <div class="flex flex-wrap items-center gap-6 text-sm md:text-base font-light">
+                                <span class="flex items-center gap-2"><i data-lucide="user" class="text-gold w-5 h-5"></i> ${article.author}</span>
+                                <span class="flex items-center gap-2"><i data-lucide="calendar" class="text-gold w-5 h-5"></i> ${article.date}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <article class="max-w-4xl mx-auto px-4 py-16 md:py-24">
+                    <div class="prose prose-lg md:prose-xl max-w-none text-gray-800 text-lg md:text-xl leading-relaxed">
+                        <p class="text-xl md:text-2xl text-gray-500 italic mb-12 border-l-4 border-gold pl-6 leading-relaxed">${article.excerpt}</p>
+                        ${paragraphs}
+                    </div>
+                    <div class="mt-16 pt-8 border-t border-gray-100 flex justify-between items-center">
+                         <button onclick="navigator.clipboard.writeText(window.location.href); alert('Lien copié !')" class="flex items-center gap-2 text-navy hover:text-gold transition-colors font-bold">
+                            <i data-lucide="share-2" class="w-5 h-5"></i> Partager l'article
+                        </button>
+                    </div>
+                </article>
+            </main>`;
+        };
+
+        const renderSocial = () => {
+            return `
+            <main class="py-20 fade-in">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <div class="text-center mb-20">
+                        <h1 class="serif text-5xl font-bold mb-6 text-navy">Suivez l'<span class="text-gold">Actualité</span></h1>
+                        <p class="text-gray-600 max-w-2xl mx-auto">Restez connecté avec La Tribune sur tous nos canaux.</p>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-16">
+                        <section>
+                            <div class="flex items-center gap-4 mb-8">
+                                <div class="bg-[#0077b5] p-3 rounded-xl text-white"><i data-lucide="linkedin" class="w-6 h-6"></i></div>
+                                <h2 class="serif text-3xl font-bold">LinkedIn</h2>
+                            </div>
+                            <div class="space-y-8">
+                                <div class="bg-white p-6 rounded-2xl shadow-lg border border-gray-100">
+                                    <p class="text-sm text-gray-600 mb-4">Heureux d'annoncer notre prochain débat parlementaire ! 🚀</p>
+                                    <div class="bg-gray-100 h-64 rounded-xl flex items-center justify-center text-gray-400 italic">[ LinkedIn Embed Placeholder ]</div>
+                                </div>
+                            </div>
+                            <a href="https://www.linkedin.com/company/la-tribune-ieseg/posts/?feedView=all" target="_blank" class="mt-8 block text-center py-4 rounded-xl border-2 border-[#0077b5] text-[#0077b5] font-bold hover:bg-[#0077b5] hover:text-white transition-all">Voir tout le flux</a>
+                        </section>
+                        <section>
+                            <div class="flex items-center gap-4 mb-8">
+                                <div class="bg-gradient-to-tr from-[#f09433] via-[#e6683c] to-[#bc1888] p-3 rounded-xl text-white"><i data-lucide="instagram" class="w-6 h-6"></i></div>
+                                <h2 class="serif text-3xl font-bold">Instagram</h2>
+                            </div>
+                            <div class="grid grid-cols-2 gap-4 mb-8">
+                                <div class="aspect-square bg-gray-200 rounded-xl overflow-hidden"><img src="https://picsum.photos/seed/ig1/500/500" class="w-full h-full object-cover"></div>
+                                <div class="aspect-square bg-gray-200 rounded-xl overflow-hidden"><img src="https://picsum.photos/seed/ig2/500/500" class="w-full h-full object-cover"></div>
+                            </div>
+                            <div class="text-center mt-8">
+                                <a href="https://www.instagram.com/latribune_iesegparis/" target="_blank" class="inline-block px-8 py-3 rounded-full bg-gradient-to-r from-[#f09433] to-[#bc1888] text-white font-bold hover:shadow-lg transition-all">Nous rejoindre</a>
+                            </div>
+                        </section>
+                    </div>
+                </div>
+            </main>`;
+        };
+
+        // --- ROUTER LOGIC ---
+
+        const ROUTES = [
+            { path: 'home', name: 'Accueil', render: renderHome },
+            { path: 'about', name: 'À Propos', render: renderAbout },
+            { path: 'events', name: 'Événements', render: renderEvents },
+            { path: 'articles', name: 'Articles', render: renderArticles },
+            { path: 'social', name: 'Social', render: renderSocial }
+        ];
+
+        function handleRoute() {
+            const hash = window.location.hash.slice(1) || 'home';
+            const app = document.getElementById('app-content');
+            
+            // Gestion route article detail
+            if (hash.startsWith('article/')) {
+                const slug = hash.split('/')[1];
+                app.innerHTML = renderArticleDetail(slug);
+                updateNavState('articles');
+            } else {
+                const route = ROUTES.find(r => r.path === hash) || ROUTES[0];
+                app.innerHTML = route.render();
+                updateNavState(route.path);
+            }
+            
+            window.scrollTo(0, 0);
+            
+            // Réinitialiser les icônes Lucide après injection HTML
+            if (window.lucide) {
+                window.lucide.createIcons();
+            }
+        }
+
+        function updateNavState(activePath) {
+            // Update Desktop Nav
+            const navContainer = document.getElementById('desktop-nav');
+            navContainer.innerHTML = ROUTES.map(route => {
+                const isActive = activePath === route.path;
+                return `
+                <a href="#${route.path}" class="text-sm lg:text-base font-medium tracking-wide transition-all hover:text-gold relative group ${isActive ? 'text-gold' : 'text-gray-300'}">
+                    ${route.name}
+                    <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-gold transition-all duration-300 group-hover:w-full ${isActive ? 'w-full' : ''}"></span>
+                </a>`;
+            }).join('');
+
+            // Update Mobile Nav
+            const mobileContainer = document.getElementById('mobile-nav-links');
+            mobileContainer.innerHTML = ROUTES.map(route => {
+                const isActive = activePath === route.path;
+                return `
+                <a href="#${route.path}" onclick="toggleMobileMenu()" class="block px-4 py-3 rounded-xl text-lg font-medium ${isActive ? 'bg-gold text-navy' : 'text-gray-300 hover:bg-white/5 hover:text-white'}">
+                    ${route.name}
+                </a>`;
+            }).join('');
+        }
+
+        // --- UI INTERACTION ---
+
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
+        }
+
+        // --- INIT ---
+
+        window.addEventListener('hashchange', handleRoute);
+        document.addEventListener('DOMContentLoaded', () => {
+            // Initial render
+            handleRoute();
+
+            // Mobile menu listener
+            document.getElementById('mobile-menu-btn').addEventListener('click', toggleMobileMenu);
+        });
+
+    </script>
+</body>
+</html>
