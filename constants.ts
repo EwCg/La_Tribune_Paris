@@ -12,7 +12,7 @@ export const TEAM_MEMBERS: TeamMember[] = [
   {
     id: '2',
     name: 'Maxence Carette',
-    role: 'Vice-Présidente',
+    role: 'Vice-Président',
     photo: 'https://raw.githubusercontent.com/EwCg/La_Tribune_Resources/main/Maxence_Carrette.jpg',
     linkedin: 'https://www.linkedin.com/in/maxence-carrette-759264250/'
   },
