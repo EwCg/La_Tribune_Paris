@@ -7,6 +7,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
     <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="articles-data.js"></script> <!-- Chargement des données -->
     <script>
         tailwind.config = {
             theme: { extend: { colors: { navy: '#011734', gold: '#FECB01', 'off-white': '#F8F9FA' }, fontFamily: { sans: ['Lato', 'sans-serif'], serif: ['Merriweather', 'serif'] } } }
@@ -31,6 +32,7 @@
                     <a href="about.html" class="text-gray-300 hover:text-gold transition-colors font-medium">À Propos</a>
                     <a href="events.html" class="text-gray-300 hover:text-gold transition-colors font-medium">Événements</a>
                     <a href="articles.html" class="text-gold font-bold border-b-2 border-gold pb-1">Articles</a>
+                    <a href="social.html" class="text-gray-300 hover:text-gold transition-colors font-medium">Social</a>
                 </div>
 
                 <!-- RIGHT -->
@@ -59,111 +61,69 @@
 
     <!-- LOGIC -->
     <script>
-        // Data from constants.ts
-        const articles = [
-          {
-            id: "art-de-la-contradiction",
-            title: "L'Art de la Contradiction : Pourquoi débattre est essentiel",
-            author: "Alexandre Dupont",
-            date: "12/03/2024",
-            excerpt: "Dans un monde de plus en plus polarisé, apprendre à écouter l'autre et à construire une réponse argumentée est une compétence vitale.",
-            content: "Le débat n'est pas une simple confrontation d'ego, mais une quête collective de vérité. À La Tribune, nous croyons que la contradiction est le moteur de la pensée critique. En apprenant à défendre des positions qui ne sont pas nécessairement les nôtres, nous développons une empathie intellectuelle indispensable.<br><br>Le débat parlementaire nous force à structurer notre pensée sous pression, à écouter activement l'adversaire pour identifier les failles de son raisonnement, et à y répondre avec élégance et précision. C'est cette école de la rigueur que nous transmettons chaque semaine à nos membres.",
-            image: "https://images.unsplash.com/photo-1507537362145-9f2382e03ecd?auto=format&fit=crop&q=80&w=1200"
-          },
-          {
-            id: "debat-parlementaire-sport-haut-niveau",
-            title: "Le Débat Parlementaire : Un sport de haut niveau",
-            author: "Sophie Martin",
-            date: "05/02/2024",
-            excerpt: "Entre adrénaline et structure rigoureuse, retour sur les coulisses de notre victoire au championnat de France 2021.",
-            content: "Le championnat de France de débat parlementaire n'est pas qu'une affaire de mots, c'est une épreuve d'endurance mentale. Pendant des mois, nos équipes se sont entraînées à analyser des motions complexes en moins de 15 minutes.<br><br>Lors de la finale de 2021, la tension était palpable. Chaque argument devait être pesé, chaque envolée lyrique justifiée. Cette victoire a marqué un tournant pour La Tribune, prouvant que l'IÉSEG a sa place parmi l'élite de l'éloquence française. Ce succès repose sur une méthode de travail collective et un soutien indéfectible entre les membres du bureau et les orateurs.",
-            image: "https://images.unsplash.com/photo-1475721027785-f74dea327912?auto=format&fit=crop&q=80&w=1200",
-            youtubeId: "58jW4v75l6E" // Exemple de vidéo de débat
-          },
-          {
-            id: "rhetorique-et-climat",
-            title: "Rhétorique et Climat : Comment porter la voix de l'urgence",
-            author: "Camille Moreau",
-            date: "20/01/2024",
-            excerpt: "Comment les figures de style peuvent-elles aider à transformer des données scientifiques froides en une action concrète ?",
-            content: "Face à l'urgence climatique, les faits seuls ne suffisent plus. Il faut savoir émouvoir pour mobiliser. La rhétorique offre des outils puissants pour rendre l'invisible visible et le futur lointain immédiat.<br><br>L'utilisation de l'hypotypose, par exemple, permet de décrire une scène avec une telle vivacité qu'elle semble se dérouler sous les yeux de l'auditeur. En tant qu'orateurs, nous avons la responsabilité d'utiliser notre art pour servir des causes qui nous dépassent. Cet article explore comment marier la rigueur scientifique avec la puissance du logos, du pathos et de l'ethos pour susciter un véritable engagement citoyen.",
-            image: "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&q=80&w=1200"
-          },
-          {
-            id: "silence-outil-meconnu",
-            title: "Le silence, cet outil méconnu de l'orateur",
-            author: "Thomas Bernard",
-            date: "10/01/2024",
-            excerpt: "Apprendre à ne rien dire pour mieux se faire entendre. Une analyse de la puissance des pauses dans le discours.",
-            content: "Beaucoup d'orateurs débutants craignent le silence comme un vide à combler. Pourtant, c'est dans le silence que naît la tension dramatique. Une pause bien placée après une question rhétorique force l'auditoire à réfléchir. Un silence prolongé avant une conclusion donne du poids à la parole qui va suivre. Maîtriser son rythme, c'est savoir orchestrer les silences. Dans cet article, nous analysons les discours de grands orateurs contemporains pour comprendre comment ils utilisent l'absence de mots pour souligner l'importance de leur message.",
-            image: "https://images.unsplash.com/photo-1499209974431-9dac3adaf471?auto=format&fit=crop&q=80&w=1200"
-          },
-          {
-            id: "ciceron-vs-ia",
-            title: "Cicéron vs IA : La machine pourra-t-elle un jour émouvoir ?",
-            author: "Antoine Petit",
-            date: "28/12/2023",
-            excerpt: "La technologie générative arrive dans l'éloquence. Mais l'âme d'un discours réside-t-elle dans les mots ou dans celui qui les porte ?",
-            content: "L'intelligence artificielle peut désormais générer des discours structurés et argumentés en quelques secondes. Mais peut-elle réellement faire preuve d'éloquence ? L'éloquence n'est pas seulement la justesse des mots, c'est l'incarnation d'un message par un corps et une voix. C'est l'imperfection humaine, l'hésitation sincère ou le tremblement d'émotion qui crée le lien avec l'auditoire. Si l'IA est un assistant formidable pour la recherche documentaire, elle reste incapable de remplacer l'ethos de l'orateur : sa crédibilité morale et sa présence scénique.",
-            image: "https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&q=80&w=1200"
-          }
-        ];
-
         const params = new URLSearchParams(window.location.search);
         const id = params.get('id');
-        const article = articles.find(a => a.id === id);
         const container = document.getElementById('article-content');
 
-        if (article) {
-            // Logique d'affichage de la vidéo
-            let videoEmbed = '';
-            if (article.youtubeId) {
-                videoEmbed = `
-                    <div class="my-12">
-                        <div class="relative w-full aspect-video rounded-2xl overflow-hidden shadow-xl bg-black">
-                            <iframe 
-                                src="https://www.youtube.com/embed/${article.youtubeId}" 
-                                title="${article.title}" 
-                                frameborder="0" 
-                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
-                                allowfullscreen 
-                                class="absolute top-0 left-0 w-full h-full">
-                            </iframe>
-                        </div>
-                    </div>
-                `;
-            }
+        // Wait for data load
+        document.addEventListener('DOMContentLoaded', () => {
+             if (window.siteData && window.siteData.articles) {
+                const article = window.siteData.articles.find(a => a.id === id);
+                renderArticle(article);
+             }
+             lucide.createIcons();
+        });
 
-            container.innerHTML = `
-                <div class="relative h-[60vh] w-full">
-                    <img src="${article.image}" class="w-full h-full object-cover">
-                    <div class="absolute inset-0 bg-navy/40"></div>
-                    <div class="absolute bottom-0 left-0 right-0 p-8 md:p-16 text-white bg-gradient-to-t from-navy/90 to-transparent">
-                        <div class="max-w-4xl mx-auto">
-                            <a href="articles.html" class="flex items-center gap-2 text-gold font-bold mb-6 hover:-translate-x-1 transition-transform"><i data-lucide="arrow-left" class="w-4 h-4"></i> Retour aux articles</a>
-                            <h1 class="font-serif text-4xl md:text-6xl font-bold mb-6 leading-tight">${article.title}</h1>
-                            <div class="flex flex-wrap items-center gap-6 text-sm md:text-base font-light">
-                                <span class="flex items-center gap-2"><i data-lucide="user" class="w-5 h-5 text-gold"></i> ${article.author}</span>
-                                <span class="flex items-center gap-2"><i data-lucide="calendar" class="w-5 h-5 text-gold"></i> ${article.date}</span>
+        function renderArticle(article) {
+            if (article) {
+                let videoEmbed = '';
+                if (article.youtubeId) {
+                    videoEmbed = `
+                        <div class="my-12">
+                            <div class="relative w-full aspect-video rounded-2xl overflow-hidden shadow-xl bg-black">
+                                <iframe 
+                                    src="https://www.youtube.com/embed/${article.youtubeId}" 
+                                    title="${article.title}" 
+                                    frameborder="0" 
+                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                                    allowfullscreen 
+                                    class="absolute top-0 left-0 w-full h-full">
+                                </iframe>
+                            </div>
+                        </div>
+                    `;
+                }
+
+                container.innerHTML = `
+                    <div class="relative h-[60vh] w-full">
+                        <img src="${article.image}" class="w-full h-full object-cover">
+                        <div class="absolute inset-0 bg-navy/40"></div>
+                        <div class="absolute bottom-0 left-0 right-0 p-8 md:p-16 text-white bg-gradient-to-t from-navy/90 to-transparent">
+                            <div class="max-w-4xl mx-auto">
+                                <a href="articles.html" class="flex items-center gap-2 text-gold font-bold mb-6 hover:-translate-x-1 transition-transform"><i data-lucide="arrow-left" class="w-4 h-4"></i> Retour aux articles</a>
+                                <h1 class="font-serif text-4xl md:text-6xl font-bold mb-6 leading-tight">${article.title}</h1>
+                                <div class="flex flex-wrap items-center gap-6 text-sm md:text-base font-light">
+                                    <span class="flex items-center gap-2"><i data-lucide="user" class="w-5 h-5 text-gold"></i> ${article.author}</span>
+                                    <span class="flex items-center gap-2"><i data-lucide="calendar" class="w-5 h-5 text-gold"></i> ${article.date}</span>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                <article class="max-w-4xl mx-auto px-4 py-16 md:py-24">
-                    <div class="prose prose-lg md:prose-xl max-w-none">
-                        <p class="text-xl md:text-2xl text-gray-500 italic mb-12 border-l-4 border-gold pl-6 leading-relaxed">${article.excerpt}</p>
-                        ${videoEmbed}
-                        <div class="text-gray-800 leading-relaxed space-y-8 text-lg md:text-xl">${article.content}</div>
-                    </div>
-                    <div class="mt-16 pt-8 border-t border-gray-100 flex justify-between items-center">
-                         <a href="articles.html" class="bg-navy text-gold px-8 py-3 rounded-full font-bold hover:bg-gold hover:text-navy transition-all shadow-lg">Lire d'autres articles</a>
-                    </div>
-                </article>
-            `;
-        } else {
-            container.innerHTML = `<div class="min-h-[60vh] flex flex-col items-center justify-center"><h2 class="serif text-3xl font-bold mb-4 text-navy">Article introuvable</h2><a href="articles.html" class="text-gold font-bold hover:underline">Retour</a></div>`;
+                    <article class="max-w-4xl mx-auto px-4 py-16 md:py-24">
+                        <div class="prose prose-lg md:prose-xl max-w-none">
+                            <p class="text-xl md:text-2xl text-gray-500 italic mb-12 border-l-4 border-gold pl-6 leading-relaxed">${article.excerpt}</p>
+                            ${videoEmbed}
+                            <div class="text-gray-800 leading-relaxed space-y-8 text-lg md:text-xl">${article.content}</div>
+                        </div>
+                        <div class="mt-16 pt-8 border-t border-gray-100 flex justify-between items-center">
+                             <a href="articles.html" class="bg-navy text-gold px-8 py-3 rounded-full font-bold hover:bg-gold hover:text-navy transition-all shadow-lg">Lire d'autres articles</a>
+                        </div>
+                    </article>
+                `;
+            } else {
+                container.innerHTML = `<div class="min-h-[60vh] flex flex-col items-center justify-center"><h2 class="serif text-3xl font-bold mb-4 text-navy">Article introuvable</h2><a href="articles.html" class="text-gold font-bold hover:underline">Retour</a></div>`;
+            }
         }
-        lucide.createIcons();
     </script>
 </body>
 </html>
