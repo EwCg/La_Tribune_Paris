@@ -7,7 +7,6 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
     <script src="https://unpkg.com/lucide@latest"></script>
-    <script src="articles-data.js"></script> <!-- Chargement des données -->
     <script>
         tailwind.config = {
             theme: { extend: { colors: { navy: '#011734', gold: '#FECB01', 'off-white': '#F8F9FA' }, fontFamily: { sans: ['Lato', 'sans-serif'], serif: ['Merriweather', 'serif'] } } }
@@ -60,19 +59,12 @@
     </footer>
 
     <!-- LOGIC -->
-    <script>
-        const params = new URLSearchParams(window.location.search);
-        const id = params.get('id');
-        const container = document.getElementById('article-content');
+    <script type="module">
+        import { MOCK_ARTICLES as articles } from './constants.js';
 
-        // Wait for data load
-        document.addEventListener('DOMContentLoaded', () => {
-             if (window.siteData && window.siteData.articles) {
-                const article = window.siteData.articles.find(a => a.id === id);
-                renderArticle(article);
-             }
-             lucide.createIcons();
-        });
+        const params = new URLSearchParams(window.location.search);
+        const slug = params.get('id'); // Note: 'id' param now expects the slug
+        const container = document.getElementById('article-content');
 
         function renderArticle(article) {
             if (article) {
@@ -96,7 +88,7 @@
 
                 container.innerHTML = `
                     <div class="relative h-[60vh] w-full">
-                        <img src="${article.image}" class="w-full h-full object-cover">
+                        <img src="${article.coverImage}" class="w-full h-full object-cover">
                         <div class="absolute inset-0 bg-navy/40"></div>
                         <div class="absolute bottom-0 left-0 right-0 p-8 md:p-16 text-white bg-gradient-to-t from-navy/90 to-transparent">
                             <div class="max-w-4xl mx-auto">
@@ -123,7 +115,11 @@
             } else {
                 container.innerHTML = `<div class="min-h-[60vh] flex flex-col items-center justify-center"><h2 class="serif text-3xl font-bold mb-4 text-navy">Article introuvable</h2><a href="articles.html" class="text-gold font-bold hover:underline">Retour</a></div>`;
             }
+            lucide.createIcons();
         }
+
+        const article = articles.find(a => a.slug === slug);
+        renderArticle(article);
     </script>
 </body>
 </html>

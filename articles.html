@@ -7,7 +7,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
     <script src="https://unpkg.com/lucide@latest"></script>
-    <script src="articles-data.js"></script> <!-- Chargement des données -->
+    
     <script>
         tailwind.config = {
             theme: { extend: { colors: { navy: '#011734', gold: '#FECB01', 'off-white': '#F8F9FA' }, fontFamily: { sans: ['Lato', 'sans-serif'], serif: ['Merriweather', 'serif'] } } }
@@ -103,9 +103,10 @@
         </div>
     </footer>
     
-    <script>
+    <script type="module">
+        import { MOCK_ARTICLES as articles } from './constants.js';
+
         // State
-        let articles = []; // Loaded from window.siteData
         let currentCategory = 'Tous';
         let searchQuery = '';
 
@@ -116,30 +117,22 @@
         const filterBtns = document.querySelectorAll('.filter-btn');
         const noResults = document.getElementById('no-results');
 
-        // Initial Load
-        document.addEventListener('DOMContentLoaded', () => {
-            if(window.siteData && window.siteData.articles) {
-                articles = window.siteData.articles;
-                renderFeatured();
-                renderArticles();
-            } else {
-                console.error("Aucune donnée d'article trouvée.");
-            }
-        });
-
         function renderFeatured() {
             if (articles.length === 0) return;
             const feat = articles[0]; // First article is featured
 
+            // Ensure category exists or default
+            const category = feat.category || 'Général';
+
             featuredContainer.innerHTML = `
             <div class="bg-white rounded-[2rem] shadow-2xl overflow-hidden border border-gray-100 flex flex-col lg:flex-row">
                 <div class="lg:w-1/2 h-64 lg:h-auto overflow-hidden relative group">
-                    <img src="${feat.image}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
+                    <img src="${feat.coverImage}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
                      ${feat.youtubeId ? '<div class="absolute inset-0 flex items-center justify-center pointer-events-none"><div class="bg-red-600/90 text-white p-4 rounded-full shadow-lg"><i data-lucide="play" class="w-8 h-8 fill-current"></i></div></div>' : ''}
                 </div>
                 <div class="lg:w-1/2 p-8 md:p-12 flex flex-col justify-center">
                     <div class="flex items-center gap-2 text-gold font-bold text-xs uppercase tracking-widest mb-4">
-                        <span class="bg-navy/10 px-2 py-1 rounded text-navy">#${feat.category}</span>
+                        <span class="bg-navy/10 px-2 py-1 rounded text-navy">#${category}</span>
                         <span class="flex items-center gap-1"><i data-lucide="book-open" class="w-4 h-4"></i> À la une</span>
                     </div>
                     <h2 class="font-serif text-3xl md:text-4xl font-bold text-navy mb-6">${feat.title}</h2>
@@ -149,7 +142,7 @@
                             <div class="w-10 h-10 rounded-full bg-navy/10 flex items-center justify-center text-navy font-bold">${feat.author.charAt(0)}</div>
                             <div class="text-sm"><div class="font-bold text-navy">${feat.author}</div><div class="text-xs text-gray-400">${feat.date}</div></div>
                         </div>
-                        <a href="article.html?id=${feat.id}" class="bg-navy text-gold px-6 py-2 rounded-full font-bold text-sm hover:bg-gold hover:text-navy transition-colors">Lire l'article</a>
+                        <a href="article.html?id=${feat.slug}" class="bg-navy text-gold px-6 py-2 rounded-full font-bold text-sm hover:bg-gold hover:text-navy transition-colors">Lire l'article</a>
                     </div>
                 </div>
             </div>`;
@@ -169,7 +162,8 @@
             }
 
             const filtered = articlesToFilter.filter(article => {
-                const matchesCategory = currentCategory === 'Tous' || article.category === currentCategory;
+                const articleCategory = article.category || 'Général';
+                const matchesCategory = currentCategory === 'Tous' || articleCategory === currentCategory;
                 const matchesSearch = article.title.toLowerCase().includes(searchQuery.toLowerCase()) || 
                                       article.excerpt.toLowerCase().includes(searchQuery.toLowerCase());
                 return matchesCategory && matchesSearch;
@@ -180,6 +174,7 @@
             } else {
                 noResults.classList.add('hidden');
                 filtered.forEach(article => {
+                    const category = article.category || 'Général';
                     const videoBadge = article.youtubeId 
                         ? `<div class="absolute bottom-4 left-4 bg-red-600 text-white p-2 rounded-full shadow-lg z-10 flex items-center justify-center"><i data-lucide="play" class="w-4 h-4 fill-current"></i></div>` 
                         : '';
@@ -187,16 +182,16 @@
                     const html = `
                     <article class="bg-white rounded-xl shadow-lg overflow-hidden hover:-translate-y-2 transition-transform duration-300 flex flex-col group">
                         <div class="h-48 overflow-hidden relative">
-                            <img src="${article.image}" class="w-full h-full object-cover group-hover:scale-110 transition-transform">
+                            <img src="${article.coverImage}" class="w-full h-full object-cover group-hover:scale-110 transition-transform">
                             <div class="absolute top-4 right-4 bg-navy/90 text-gold text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider">
-                                #${article.category}
+                                #${category}
                             </div>
                             ${videoBadge}
                         </div>
                         <div class="p-6 flex flex-col flex-grow">
                             <h3 class="font-serif text-xl font-bold mb-3 text-navy">${article.title}</h3>
                             <p class="text-gray-600 text-sm mb-4 line-clamp-3 flex-grow">${article.excerpt}</p>
-                            <a href="article.html?id=${article.id}" class="flex items-center gap-2 text-navy font-bold text-sm hover:text-gold transition-colors mt-auto">
+                            <a href="article.html?id=${article.slug}" class="flex items-center gap-2 text-navy font-bold text-sm hover:text-gold transition-colors mt-auto">
                                 Lire la suite <i data-lucide="arrow-right" class="w-4 h-4"></i>
                             </a>
                         </div>
@@ -208,29 +203,33 @@
             }
         }
 
-        function handleFilterClick(e) {
-            filterBtns.forEach(btn => btn.classList.remove('active'));
-            e.target.classList.add('active');
-            currentCategory = e.target.dataset.category;
-            renderArticles();
-        }
-
-        function handleSearchInput(e) {
-            searchQuery = e.target.value;
-            renderArticles();
-        }
-
-        function resetFilters() {
+        // Event Listeners
+        window.resetFilters = () => {
             searchQuery = '';
             searchInput.value = '';
             currentCategory = 'Tous';
             filterBtns.forEach(btn => btn.classList.remove('active'));
             filterBtns[0].classList.add('active');
             renderArticles();
-        }
+        };
 
-        filterBtns.forEach(btn => btn.addEventListener('click', handleFilterClick));
-        searchInput.addEventListener('input', handleSearchInput);
+        filterBtns.forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                filterBtns.forEach(b => b.classList.remove('active'));
+                e.target.classList.add('active');
+                currentCategory = e.target.dataset.category;
+                renderArticles();
+            });
+        });
+
+        searchInput.addEventListener('input', (e) => {
+            searchQuery = e.target.value;
+            renderArticles();
+        });
+
+        // Initialize
+        renderFeatured();
+        renderArticles();
     </script>
 </body>
 </html>
