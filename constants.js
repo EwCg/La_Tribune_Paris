@@ -77,7 +77,7 @@ export const MOCK_ARTICLES = [
     author: "Erwan COGAT",
     excerpt: "Dans un monde de plus en plus polarisé, apprendre à écouter l'autre et à construire une réponse argumentée est une compétence vitale.",
     content: "Le débat n'est pas une simple confrontation d'ego, mais une quête collective de vérité. À La Tribune, nous croyons que la contradiction est le moteur de la pensée critique. En apprenant à défendre des positions qui ne sont pas nécessairement les nôtres, nous développons une empathie intellectuelle indispensable.<br><br>Le débat parlementaire nous force à structurer notre pensée sous pression, à écouter activement l'adversaire pour identifier les failles de son raisonnement, et à y répondre avec élégance et précision. C'est cette école de la rigueur que nous transmettons chaque semaine à nos membres.",
-    coverImage: "https://images.unsplash.com/photo-1507537362145-9f2382e03ecd?auto=format&fit=crop&q=80&w=1200",
+    coverImage: "https://raw.githubusercontent.com/EwCg/La_Tribune_Resources/main/socrates.jpg",
     date: "12/03/2024"
   },
   {
@@ -108,7 +108,7 @@ export const MOCK_ARTICLES = [
     author: "Erwan COGAT",
     excerpt: "Apprendre à ne rien dire pour mieux se faire entendre. Une analyse de la puissance des pauses dans le discours.",
     content: "Beaucoup d'orateurs débutants craignent le silence comme un vide à combler. Pourtant, c'est dans le silence que naît la tension dramatique. Une pause bien placée après une question rhétorique force l'auditoire à réfléchir. Un silence prolongé avant une conclusion donne du poids à la parole qui va suivre.<br><br>Maîtriser son rythme, c'est savoir orchestrer les silences. Dans cet article, nous analysons les discours de grands orateurs contemporains pour comprendre comment ils utilisent l'absence de mots pour souligner l'importance de leur message.",
-    coverImage: "https://images.unsplash.com/photo-1499209974431-9dac3adaf471?auto=format&fit=crop&q=80&w=1200",
+    coverImage: "https://raw.githubusercontent.com/EwCg/La_Tribune_Resources/main/Gemini_Generated_Image_of03kwof03kwof03.png",
     date: "10/01/2024"
   },
   {
