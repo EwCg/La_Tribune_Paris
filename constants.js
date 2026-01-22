@@ -88,7 +88,7 @@ export const MOCK_ARTICLES = [
     excerpt: "Entre adrénaline et structure rigoureuse, retour sur les coulisses de notre victoire au championnat de France 2021.",
     content: "Lors de la finale de 2021, la tension était palpable. Chaque argument devait être pesé, chaque envolée lyrique justifiée. Cette victoire a marqué un tournant pour La Tribune, prouvant que l'IÉSEG a sa place parmi l'élite de l'éloquence française. Ce succès repose sur une méthode de travail collective et un soutien indéfectible entre les membres du bureau et les orateurs.",
     coverImage: "https://raw.githubusercontent.com/EwCg/La_Tribune_Resources/main/Panthéon.jpg",
-    date: "05/02/2024",
+    date: "05/02/2025",
     youtubeId: "4nelubZ7Zf4"
   },
   {
@@ -99,7 +99,7 @@ export const MOCK_ARTICLES = [
     excerpt: "Comment les figures de style peuvent-elles aider à transformer des données scientifiques froides en une action concrète ?",
     content: "Face à l'urgence climatique, les faits seuls ne suffisent plus. Il faut savoir émouvoir pour mobiliser. La rhétorique offre des outils puissants pour rendre l'invisible visible et le futur lointain immédiat.<br><br>L'utilisation de l'hypotypose, par exemple, permet de décrire une scène avec une telle vivacité qu'elle semble se dérouler sous les yeux de l'auditeur. En tant qu'orateurs, nous avons la responsabilité d'utiliser notre art pour servir des causes qui nous dépassent. Cet article explore comment marier la rigueur scientifique avec la puissance du logos, du pathos et de l'ethos pour susciter un véritable engagement citoyen.",
     coverImage: "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&q=80&w=1200",
-    date: "20/01/2024"
+    date: "20/01/2025"
   },
   {
     slug: "silence-outil-meconnu",
@@ -109,7 +109,7 @@ export const MOCK_ARTICLES = [
     excerpt: "Apprendre à ne rien dire pour mieux se faire entendre. Une analyse de la puissance des pauses dans le discours.",
     content: "Beaucoup d'orateurs débutants craignent le silence comme un vide à combler. Pourtant, c'est dans le silence que naît la tension dramatique. Une pause bien placée après une question rhétorique force l'auditoire à réfléchir. Un silence prolongé avant une conclusion donne du poids à la parole qui va suivre.<br><br>Maîtriser son rythme, c'est savoir orchestrer les silences. Dans cet article, nous analysons les discours de grands orateurs contemporains pour comprendre comment ils utilisent l'absence de mots pour souligner l'importance de leur message.",
     coverImage: "https://raw.githubusercontent.com/EwCg/La_Tribune_Resources/main/Gemini_Generated_Image_of03kwof03kwof03.png",
-    date: "10/01/2024"
+    date: "10/01/2025"
   },
   {
     slug: "ciceron-vs-ia",
@@ -119,6 +119,6 @@ export const MOCK_ARTICLES = [
     excerpt: "La technologie générative arrive dans l'éloquence. Mais l'âme d'un discours réside-t-elle dans les mots ou dans celui qui les porte ?",
     content: "La dictature des mots justes. Sur le papier, l'IA est imbattable. Elle ne bafouille pas, ne perd pas le fil et possède un vocabulaire infini. Elle peut imiter le style de Victor Hugo ou la concision de Hemingway. Pourtant, croire que l'éloquence réside uniquement dans l'agencement des mots est une erreur d'analyse. C'est confondre la partition et la musique. L'IA génère une partition parfaite, mais elle n'a aucun instrument pour la jouer. L'éloquence n'est pas une suite de signes : c'est un acte vivant.<br><br>L'Incarnation : La grande absente. Comme vous le soulignez justement, l'âme d'un discours ne réside pas dans le texte, mais dans sa projection par un corps et une voix. L'éloquence est physique. Elle est faite de silences, de respirations, d'un regard qui vacille ou d'une main qui tremble. Cicéron parlait du pectus (le cœur, les tripes) pour expliquer la capacité à émouvoir. Pour toucher l'autre, il faut être soi-même touchable. L'humain émeut parce qu'il est vulnérable. Lorsqu'un orateur monte à la tribune, il engage sa crédibilité, son honneur, parfois sa sécurité. Nous vibrons pour ce risque. La machine, elle, ne risque rien. Elle n'a ni corps à exposer, ni voix à briser. Elle produit du texte 'au kilomètre' sans jamais ressentir la gravité de ce qu'elle énonce.",
     coverImage: "https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&q=80&w=1200",
-    date: "28/12/2023"
+    date: "28/12/2025"
   }
 ];
