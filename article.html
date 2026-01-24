@@ -58,9 +58,12 @@
         </div>
     </footer>
 
+    <!-- Load data first -->
+    <script src="constants.js"></script>
+
     <!-- LOGIC -->
-    <script type="module">
-        import { MOCK_ARTICLES as articles } from './constants.js';
+    <script>
+        const articles = window.constants?.MOCK_ARTICLES || [];
 
         const params = new URLSearchParams(window.location.search);
         const slug = params.get('id'); // Note: 'id' param now expects the slug

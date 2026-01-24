@@ -103,8 +103,13 @@
         </div>
     </footer>
     
-    <script type="module">
-        import { MOCK_ARTICLES as articles } from './constants.js';
+    <!-- Load data first -->
+    <script src="constants.js"></script>
+    
+    <!-- Main Script -->
+    <script>
+        // Access data from the global window object set in constants.js
+        const articles = window.constants.MOCK_ARTICLES;
 
         // State
         let currentCategory = 'Tous';
@@ -118,7 +123,7 @@
         const noResults = document.getElementById('no-results');
 
         function renderFeatured() {
-            if (articles.length === 0) return;
+            if (!articles || articles.length === 0) return;
             const feat = articles[0]; // First article is featured
 
             // Ensure category exists or default
@@ -152,6 +157,8 @@
         function renderArticles() {
             gridContainer.innerHTML = '';
             
+            if (!articles) return;
+
             // Exclude first article from grid if search/filter is empty (so it stays only in featured)
             // But if filtering, we search in ALL articles.
             let articlesToFilter = articles;

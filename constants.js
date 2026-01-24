@@ -1,8 +1,8 @@
 
 // C'est ici que vous pouvez ajouter ou modifier des articles.
-// Gardez la structure identique pour chaque nouvel article.
+// Les données sont attachées à window.constants pour être accessibles partout.
 
-export const TEAM_MEMBERS = [
+const TEAM_MEMBERS = [
   {
     id: '1',
     name: 'Fabio Minetti',
@@ -47,7 +47,7 @@ export const TEAM_MEMBERS = [
   }
 ];
 
-export const PARTNERS = [
+const PARTNERS = [
   { 
     name: 'FFDE', 
     logo: 'https://raw.githubusercontent.com/EwCg/La_Tribune_Resources/main/FFDE.jpg' 
@@ -58,7 +58,7 @@ export const PARTNERS = [
   }
 ];
 
-export const GALLERY_IMAGES = [
+const GALLERY_IMAGES = [
   'https://raw.githubusercontent.com/EwCg/La_Tribune_Resources/main/Amélie_Oudeacastera.jpeg',
   'https://raw.githubusercontent.com/EwCg/La_Tribune_Resources/main/Antoine_discours.jpeg',
   'https://raw.githubusercontent.com/EwCg/La_Tribune_Resources/main/Arthur_discour.jpeg',
@@ -69,11 +69,21 @@ export const GALLERY_IMAGES = [
   'https://raw.githubusercontent.com/EwCg/La_Tribune_Resources/main/MUN.jpeg'
 ];
 
-export const MOCK_ARTICLES = [
+const MOCK_ARTICLES = [
+  {
+    slug: "limprovisation-saut-dans-le-vide",
+    title: "L'Improvisation : Le saut dans le vide",
+    category: "Rhétorique",
+    author: "Erwan COGAT",
+    excerpt: "Se lancer sans filet, construire sa pensée en parlant, accepter l'inconnu. L'improvisation est l'école ultime de la confiance en soi.",
+    content: "L'improvisation est souvent perçue comme un don inné, une capacité magique à toujours retomber sur ses pattes. Pourtant, c'est avant tout une discipline de l'écoute et du lâcher-prise.<br><br>Contrairement au discours préparé, l'improvisation ne permet pas le retour en arrière. Chaque mot prononcé devient une brique sur laquelle il faut construire la suite. C'est un exercice de haute voltige qui demande une présence totale à l'instant. Accepter de ne pas savoir ce que l'on va dire dans dix secondes, c'est accepter de faire confiance à son instinct et à sa culture.<br><br>À La Tribune, nous pratiquons l'improvisation non pas pour devenir des comédiens, mais pour aiguiser notre répartie et notre capacité d'adaptation face à l'imprévu.",
+    coverImage: "https://images.unsplash.com/photo-1516280440614-6697288d5d38?auto=format&fit=crop&q=80&w=1200",
+    date: "15/03/2025"
+  },
   {
     slug: "art-de-la-contradiction",
     title: "L'Art de la Contradiction : Pourquoi débattre est essentiel",
-    category: "Rhétorique", // Ajouté pour le filtre
+    category: "Rhétorique",
     author: "Erwan COGAT",
     excerpt: "Dans un monde de plus en plus polarisé, apprendre à écouter l'autre et à construire une réponse argumentée est une compétence vitale.",
     content: "Le débat n'est pas une simple confrontation d'ego, mais une quête collective de vérité. À La Tribune, nous croyons que la contradiction est le moteur de la pensée critique. En apprenant à défendre des positions qui ne sont pas nécessairement les nôtres, nous développons une empathie intellectuelle indispensable.<br><br>Le débat parlementaire nous force à structurer notre pensée sous pression, à écouter activement l'adversaire pour identifier les failles de son raisonnement, et à y répondre avec élégance et précision. C'est cette école de la rigueur que nous transmettons chaque semaine à nos membres.",
@@ -122,3 +132,11 @@ export const MOCK_ARTICLES = [
     date: "28/12/2025"
   }
 ];
+
+// Exposition globale pour l'utilisation sans module
+window.constants = {
+    TEAM_MEMBERS,
+    PARTNERS,
+    GALLERY_IMAGES,
+    MOCK_ARTICLES
+};
