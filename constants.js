@@ -85,6 +85,16 @@ export const MOCK_ARTICLES = [
      },
   */
   {
+    slug: "limprovisation-saut-dans-le-vide",
+    title: "L'Improvisation : Le saut dans le vide",
+    category: "Rhétorique",
+    author: "Erwan COGAT",
+    excerpt: "Se lancer sans filet, construire sa pensée en parlant, accepter l'inconnu. L'improvisation est l'école ultime de la confiance en soi.",
+    content: "L'improvisation est souvent perçue comme un don inné, une capacité magique à toujours retomber sur ses pattes. Pourtant, c'est avant tout une discipline de l'écoute et du lâcher-prise.<br><br>Contrairement au discours préparé, l'improvisation ne permet pas le retour en arrière. Chaque mot prononcé devient une brique sur laquelle il faut construire la suite. C'est un exercice de haute voltige qui demande une présence totale à l'instant. Accepter de ne pas savoir ce que l'on va dire dans dix secondes, c'est accepter de faire confiance à son instinct et à sa culture.<br><br>À La Tribune, nous pratiquons l'improvisation non pas pour devenir des comédiens, mais pour aiguiser notre répartie et notre capacité d'adaptation face à l'imprévu.",
+    coverImage: "https://images.unsplash.com/photo-1516280440614-6697288d5d38?auto=format&fit=crop&q=80&w=1200",
+    date: "15/03/2025"
+  },
+  {
     slug: "debat-parlementaire-sport-haut-niveau",
     title: "Le Débat Parlementaire : Un sport de haut niveau",
     category: "Débat",
